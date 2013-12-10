@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.radiumone.R1Connect.phonegap"
+    version="1.0">
+
+    <name>R1Connect Plugin</name>
+    
+    <description>R1Connect Plugin for PhoneGap/Cordova</description>
+    
+    <license>R1 API License Agreement</license>
+    
+    <engines>
+      <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <dependency id="org.apache.cordova.device" url="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" commit="master" subdir="." />
+
+    <js-module src="www/R1Connect.js" name="R1Connect">
+         <clobbers target="R1Connect" />
+     </js-module>
+
+    <!-- android -->
+    <platform name="android">
+
+        <config-file target="config.xml" parent="/widget">
+             <feature name="R1ConnectPlugin">
+                <param name="android-package" value="R1ConnectPlugin" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.VIBRATE" />
+            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+            <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+
+            <receiver android:name="com.radiumone.emitter.gcm.R1GCMPushReceiver" android:exported="true"
+                  android:permission="com.google.android.c2dm.permission.SEND" >
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <category android:name="$PACKAGE_NAME" />
+                </intent-filter>
+            </receiver>
+
+            <receiver android:name="com.radiumone.emitter.push.R1PushBroadcastReceiver"
+                  android:exported="false">
+                <intent-filter>
+                    <action android:name="com.radiumone.r1push.OPENED_INTERNAL"/>
+                </intent-filter>
+            </receiver>
+
+            <service android:name="com.radiumone.emitter.push.R1ConnectService"/>
+            <service android:name="com.radiumone.emitter.location.LocationService"/>
+        </config-file>
+
+        <source-file src="src/android/R1ConnectPlugin.java" target-dir="src/com/radiumone/cordova/plugin" />
+        <source-file src="src/android/LibR1Connect.jar" target-dir="libs/" />
+        <source-file src="src/android/google-play-services.jar" target-dir="libs/" />
+        <source-file src="src/android/android-support-v4.jar" target-dir="libs/" />
+        <source-file src="src/android/r1connect.properties" target-dir="assets/" />
+
+    </platform>
+    
+    <!-- ios -->
+    <platform name="ios">
+
+        <config-file target="config.xml" parent="/widget">
+             <feature name="R1ConnectPlugin">
+                <param name="ios-package" value="R1ConnectPlugin" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+          <array>
+          </array>
+        </config-file>
+        
+        <header-file src="src/ios/R1ConnectPlugin.h" />
+        <header-file src="src/ios/R1ConnectPlugin+Common.h" />
+        <header-file src="src/ios/R1ConnectPlugin+LocationService.h" />
+        <header-file src="src/ios/R1ConnectPlugin+Push.h" />
+        <header-file src="src/ios/AppDelegate+R1Connect.h" />
+        <source-file src="src/ios/R1ConnectPlugin.m" />
+        <source-file src="src/ios/R1ConnectPlugin+LocationService.m" />
+        <source-file src="src/ios/R1ConnectPlugin+Push.m" />
+        <source-file src="src/ios/R1ConnectPlugin+Common.m" />
+        <source-file src="src/ios/R1ConnectPlugin+Emitter.m" />
+        <source-file src="src/ios/AppDelegate+R1Connect.m" />
+
+        <header-file src="src/ios/Lib/R1SDK.h"  />
+        <header-file src="src/ios/Lib/R1Emitter.h"  />
+        <header-file src="src/ios/Lib/R1EmitterLineItem.h"  />
+        <header-file src="src/ios/Lib/R1EmitterSocialPermission.h"  />
+        <header-file src="src/ios/Lib/R1Push.h"  />
+        <header-file src="src/ios/Lib/R1PushTags.h"  />
+        <header-file src="src/ios/Lib/R1LocationService.h"  />
+
+        <source-file src="src/ios/Lib/LibR1Connect.a" framework="true"/>
+
+        <!-- system frameworks -->
+        <framework src="libsqlite3.dylib" />
+        <framework src="UIKit.framework" />
+        <framework src="Foundation.framework" />
+        <framework src="CoreGraphics.framework" />
+        <framework src="AdSupport.framework" weak="true" />
+        <framework src="CoreTelephony.framework" />
+        <framework src="CoreLocation.framework" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="Security.framework" />
+    </platform>
+</plugin>

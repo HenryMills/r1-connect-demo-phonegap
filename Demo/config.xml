@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.radiumone.testappent" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>R1ConnectPG</name>
+    <description>
+        A sample Apache Cordova application that responds to the deviceready event.
+    </description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="fullscreen" value="false" />
+    <preference name="webviewbounce" value="true" />
+    
+    <preference name="com.radiumone.r1connect.applicationId" value="[Your application Id]" />
+    <preference name="com.radiumone.r1connect.clientKey" value="[Your client key]" />
+    <preference name="com.radiumone.r1connect.senderId" value="Your GCM sender id" />
+</widget>
