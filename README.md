@@ -129,7 +129,7 @@ If you want to use Push on Android:
 
 *Callback arguments:* (bool isStarted)
 
-Indicates whether SDK is started. SDK started automatically if you setted up config.xml.
+Indicates whether the SDK is started. The SDK started automatically if you setted up config.xml.
 
 	R1SDK.isStarted(function (isStarted) {
 		//...
@@ -155,7 +155,7 @@ Get last setted application user identifier.
 
 #### setEnabled
 
-Enable or disable location service for giving location in SDK.
+Enable or disable the location service for giving location in the SDK.
 
 	R1LocationService.setEnabled(true);
 
@@ -171,7 +171,7 @@ Indicates whether R1LocationService is enabled.
 
 #### setAutoupdateTimeout
 
-When location service enabled location information will be sent automatically. However, locationService doesn’t fetch the location constantly. For instance, when the location is received the SDK will turn off the location in CLLocationManager and wait 10 minutes (by default) before attempting to retrieve it again. You can change this value.
+When location service is enabled location information will be sent automatically. However, locationService doesn’t fetch the location constantly. For instance, when the location is received the SDK will turn off the location in CLLocationManager and wait 10 minutes (by default) before attempting to retrieve it again. You can change this value.
 
 	R1LocationService.setAutoupdateTimeout(1200); // 20 minutes
 
@@ -195,7 +195,7 @@ Get current state of R1LocationService.
 		//...
     });
 
-Possible values ​​of state:
+Possible state values:
 
 - "Disabled"
 - "Off"
@@ -223,7 +223,7 @@ Get currently used user coordinate.
 
 #### updateNow
 
-If R1LocationService is in "Wait Next Update" state, you can update location manually.
+If R1LocationService is in "Wait Next Update" state, you can update the location manually.
 
 	R1LocationService.updateNow();
 	
@@ -231,7 +231,7 @@ If R1LocationService is in "Wait Next Update" state, you can update location man
 
 ##### R1LocationService.state
 
-Notify about location service *state* changed
+Notify the location service *state* has changed
 
 	document.addEventListener("R1LocationService.state", function(event) {
 		// event.state 
@@ -239,7 +239,7 @@ Notify about location service *state* changed
 
 ##### R1LocationService.coordinate
 
-Notify about location service *coordinate* changed
+Notify the location service *coordinate* has changed
 
 	document.addEventListener("R1LocationService.coordinate", function(event) {
 		// event.latitude, event.longitude
@@ -251,7 +251,7 @@ Notify about location service *coordinate* changed
 
 *Callback arguments:* (bool isStarted)
 
-Indicates whether Emitter is started. Emitter started automatically if you setted up *com.radiumone.r1connect.applicationId* key in config.xml.
+Indicates whether the Emitter has started. The Emitter starts automatically if you set the up *com.radiumone.r1connect.applicationId* key in config.xml.
 
 	R1Emitter.isStarted(function (isStarted) {
 		//...
@@ -259,7 +259,7 @@ Indicates whether Emitter is started. Emitter started automatically if you sette
     
 #### setAppName
 
-The application name associated with emitter. By default, this property is populated with the `CFBundleName` string from the application bundle. If you wish to override this property, you must do so before making any tracking calls.
+The application name associated with this emitter. By default, this property is populated with the `CFBundleName` string from the application bundle. If you wish to override this property, you must do so before making any tracking calls.
 
 	R1Emitter.setAppName("Custom application name");
 
@@ -431,7 +431,7 @@ Basically, a page view, it provides info about that screen
 
 *Callback arguments:* (bool isStarted)
 
-Indicates whether Push is started. Push started automatically if you setted up all keys in config.xml.
+Indicates whether Push has started. Push starts automatically if you set up all the keys in config.xml.
 
 	R1Push.isStarted(function (isStarted) {
 		//...
@@ -457,7 +457,7 @@ Indicates whether R1Push is enabled.
 
 *Callback arguments:* (String deviceToken)
 
-Get the push identifier for the device. Can be null, is R1Push not enabled.
+Get the push identifier for the device. Can be null if R1Push not enabled.
 
 	R1Push.getDeviceToken(function (deviceToken) {
 		//...
@@ -473,7 +473,7 @@ Set application badge number.
 
 #### getBadgeNumber
 
-**Note:** iOS only. For Android always call callback with 0 value.
+**Note:** iOS only. For Android the callback will always be a 0 value.
 
 *Callback arguments:* (int badgeNumber)
 
@@ -515,7 +515,7 @@ Get the current tags.
 
 ##### R1Push.deviceToken
 
-Notify about push *deviceToken* changed
+Notify the push *deviceToken* has changed
 
 	document.addEventListener("R1Push.deviceToken", function(event) {
 		// event.deviceToken
@@ -523,7 +523,7 @@ Notify about push *deviceToken* changed
 
 ##### R1Push.foregroundNotification
 
-Notify when notification recevied when application was in foreground
+Notify when a push notification is recieved when the application is running in the foreground
 
 	document.addEventListener("R1Push.foregroundNotification", function(event) {
 		// event - object with full information about notification
@@ -532,7 +532,7 @@ Notify when notification recevied when application was in foreground
     
 ##### R1Push.backgroundNotification
 
-Notify when notification recevied when application was in background and opened by this notification
+Notify when a push notification is received when the application is running in the background and the app is opened by this notification
 
 	document.addEventListener("R1Push.backgroundNotification", function(event) {
 		// event - object with full information about notification
@@ -540,7 +540,8 @@ Notify when notification recevied when application was in background and opened 
     }, false);
     
 ## Example
-A example can be found in Demo.  To run it, copy the files:
+
+An example can be found in Demo. To run it, copy the files:
 
 - Demo/index.html to www/index.html
 - Demo/css/* to www/css
