@@ -12,9 +12,9 @@ This plugin is meant to work with PhoneGap 3.0.0+
 
 #### Automatic Installation using PhoneGap/Cordova CLI (iOS and Android)
 1. Install this plugin using PhoneGap/Cordova cli:
-```
-cordova plugin add [TBD: Add github link]
-``` 
+
+		cordova plugin add https://github.com/radiumone/r1-connect-demo-phonegap
+
 
 2. Modify the www/config.xml ( res/xml/config.xml for android ) directory to contain (replacing with your configuration settings) :
 Required (for Emitter only):
