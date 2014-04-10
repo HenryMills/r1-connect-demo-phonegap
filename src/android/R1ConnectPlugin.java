@@ -3,9 +3,7 @@ package com.radiumone.cordova.plugin;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
-import android.location.Location;
 import android.text.TextUtils;
-import com.radiumone.emitter.Emitter;
 import com.radiumone.emitter.R1Emitter;
 import com.radiumone.emitter.R1EmitterLineItem;
 import com.radiumone.emitter.R1SocialPermission;
@@ -14,7 +12,6 @@ import com.radiumone.emitter.location.LocationPreferences;
 import com.radiumone.emitter.push.R1Push;
 import com.radiumone.emitter.push.R1PushConfig;
 import com.radiumone.emitter.push.R1PushPreferences;
-import com.radiumone.engine.i10n.tracker.TrackerMessageProto;
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -261,7 +258,7 @@ public class R1ConnectPlugin extends CordovaPlugin{
                         final String userName = getStringFromParameter(args, 1);
                         HashMap<String, Object> params = null;
                         if ( args.length() > 2 ){
-                            params = getMapFromParameter(args, 3);
+                            params = getMapFromParameter(args, 2);
                         }
                         R1Emitter.getInstance().emitLogin(userId, userName, params);
                         callbackContext.success();
@@ -272,20 +269,46 @@ public class R1ConnectPlugin extends CordovaPlugin{
                     if ( args == null || args.length() == 0 ){
                         callbackContext.error(WRONG_PARAMETERS_COUNT);
                     } else {
-                        final Emitter.UserItem userItem = new Emitter.UserItem();
-                        userItem.userId = getStringFromParameter(args, 0);
-                        userItem.userName = getStringFromParameter(args, 1);
-                        userItem.email = getStringFromParameter(args, 2);
-                        userItem.streetAddress = getStringFromParameter(args, 3);
-                        userItem.phone = getStringFromParameter(args, 4);
-                        userItem.city = getStringFromParameter(args, 5);
-                        userItem.state = getStringFromParameter(args, 6);
-                        userItem.zip = getStringFromParameter(args, 7);
+                        String userId = getStringFromParameter(args, 0);
+                        String userName = getStringFromParameter(args, 1);
+                        String country = getStringFromParameter(args, 2);
+                        String state = getStringFromParameter(args, 3);
+                        String city = getStringFromParameter(args, 4);
                         HashMap<String, Object> params = null;
-                        if ( args.length() > 8 ){
-                            params = getMapFromParameter(args, 8);
+                        if ( args.length() > 5 ){
+                            params = getMapFromParameter(args, 5);
                         }
-                        R1Emitter.getInstance().emitRegistration(userItem, params);
+                        R1Emitter.getInstance().emitRegistration(userId, userName, country, state, city, params);
+                        callbackContext.success();
+                    }
+                    return true;
+
+                } else if ( "emitter_emitUserInfo".equals(action)){
+
+                    if ( args == null || args.length() == 0 ){
+                        callbackContext.error(WRONG_PARAMETERS_COUNT);
+                    } else {
+                        HashMap<String, Object> userData = getMapFromParameter(args,0);
+
+                        R1Emitter.UserItem userItem = new R1Emitter.UserItem();
+
+                        userItem.userId = (String)userData.get("userID");
+                        userItem.userName = (String)userData.get("userName");
+                        userItem.email = (String)userData.get("email");
+                        userItem.firstName = (String)userData.get("firstName");
+                        userItem.lastName = (String)userData.get("lastName");
+                        userItem.streetAddress = (String)userData.get("streetAddress");
+                        userItem.phone = (String)userData.get("phone");
+                        userItem.city = (String)userData.get("city");
+                        userItem.state = (String)userData.get("state");
+                        userItem.zip = (String)userData.get("zip");
+
+
+                        HashMap<String, Object> params = null;
+                        if ( args.length() > 1 ){
+                            params = getMapFromParameter(args, 1);
+                        }
+                        R1Emitter.getInstance().emitUserInfo(userItem, params);
                         callbackContext.success();
                     }
                     return true;
@@ -295,16 +318,13 @@ public class R1ConnectPlugin extends CordovaPlugin{
                     if ( args == null || args.length() == 0 ){
                         callbackContext.error(WRONG_PARAMETERS_COUNT);
                     } else {
-                        final String userId = getStringFromParameter(args, 0);
-                        final String userName = getStringFromParameter(args, 1);
-
-                        List<R1SocialPermission> permissionList = getSocialPermissionListFromParameter(args, 2);
+                        List<R1SocialPermission> permissionList = getSocialPermissionListFromParameter(args, 0);
 
                         HashMap<String, Object> params = null;
-                        if ( args.length() > 3 ){
-                            params = getMapFromParameter(args, 3);
+                        if ( args.length() > 1 ){
+                            params = getMapFromParameter(args, 1);
                         }
-                        R1Emitter.getInstance().emitFBConnect(userId, userName, permissionList, params);
+                        R1Emitter.getInstance().emitFBConnect(permissionList, params);
                         callbackContext.success();
                     }
                     return true;
@@ -333,7 +353,7 @@ public class R1ConnectPlugin extends CordovaPlugin{
                     if ( args == null || args.length() == 0 ){
                         callbackContext.error(WRONG_PARAMETERS_COUNT);
                     } else {
-                        final Emitter.EmitItem emitItem = new Emitter.EmitItem();
+                        final R1Emitter.EmitItem emitItem = new R1Emitter.EmitItem();
                         emitItem.transactionId = getStringFromParameter(args,0);
                         emitItem.storeId = getStringFromParameter(args, 1);
                         emitItem.storeName = getStringFromParameter(args, 2);
@@ -894,19 +914,26 @@ public class R1ConnectPlugin extends CordovaPlugin{
             return null;
         }
 
-        String paramString = getStringFromParameter(params, index);
-        if ( !TextUtils.isEmpty(paramString) ){
+        Object permissionsObject = null;
+        try {
+            permissionsObject = params.get(index);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        if ( permissionsObject instanceof JSONArray ){
             try {
-                JSONArray array = new JSONArray(paramString);
+                JSONArray array = (JSONArray) permissionsObject;
                 int size = array.length();
-                if ( size > 0 ){
+                if (size > 0) {
                     list = new ArrayList<R1SocialPermission>();
-                    for (int i = 0; i < size; i++){
+                    for (int i = 0; i < size; i++) {
                         JSONObject object = array.getJSONObject(i);
-                        if ( object != null ){
+                        if (object != null) {
                             final R1SocialPermission permission = new R1SocialPermission();
                             permission.name = object.getString("name");
-                            permission.granted =object.getBoolean("granted");
+                            permission.granted = object.getBoolean("granted");
                             list.add(permission);
                         }
                     }
@@ -914,7 +941,29 @@ public class R1ConnectPlugin extends CordovaPlugin{
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        } else {
+            String paramString = getStringFromParameter(params, index);
+            if (!TextUtils.isEmpty(paramString)) {
+                try {
+                    JSONArray array = new JSONArray(paramString);
+                    int size = array.length();
+                    if (size > 0) {
+                        list = new ArrayList<R1SocialPermission>();
+                        for (int i = 0; i < size; i++) {
+                            JSONObject object = array.getJSONObject(i);
+                            if (object != null) {
+                                final R1SocialPermission permission = new R1SocialPermission();
+                                permission.name = object.getString("name");
+                                permission.granted = object.getBoolean("granted");
+                                list.add(permission);
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
+            }
         }
 
         return list;

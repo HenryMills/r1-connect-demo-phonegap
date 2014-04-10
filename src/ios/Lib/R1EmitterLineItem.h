@@ -1,10 +1,10 @@
 @interface R1EmitterLineItem : NSObject
 
 /*! The item ID, as a string. */
-@property (nonatomic, copy)  NSString *productID;
+@property (nonatomic, copy)  NSString *itemID;
 
 /*! The item name. */
-@property (nonatomic, copy) NSString *productName;
+@property (nonatomic, copy) NSString *itemName;
 
 /*! The item quantity. */
 @property (nonatomic, assign) NSInteger quantity;
@@ -24,27 +24,27 @@
 /*! The item category. */
 @property (nonatomic, copy) NSString * itemCategory;
 
-- (id) initWithProductID:(NSString *) productID;
+- (id) initWithItemID:(NSString *) itemID;
 
 
 /*!
  Create and initialize an item.
  
- @param productID The item product ID; must not be `nil` or empty.
+ @param itemID The item product ID; must not be `nil` or empty.
  
- @param productName The item product name; must not be `nil` or empty.
+ @param itemName The item product name; must not be `nil` or empty.
  
  @return The newly initialized item.
  */
-+ (R1EmitterLineItem *) itemWithID:(NSString *) productID
-                              name:(NSString *) productName;
++ (R1EmitterLineItem *) itemWithID:(NSString *) itemID
+                              name:(NSString *) itemName;
 
 /*!
  Create and initialize an item.
  
- @param productID The item product ID; must not be `nil` or empty.
+ @param itemID The item product ID; must not be `nil` or empty.
  
- @param productName The item product name; must not be `nil` or empty.
+ @param itemName The item product name; must not be `nil` or empty.
  
  @param quantity The item quantity, as an NSInteger.
 
@@ -60,8 +60,8 @@
 
  @return The newly initialized item.
  */
-+ (R1EmitterLineItem *) itemWithID:(NSString *) productID
-                              name:(NSString *) productName
++ (R1EmitterLineItem *) itemWithID:(NSString *) itemID
+                              name:(NSString *) itemName
                           quantity:(NSInteger) quantity
                      unitOfMeasure:(NSString *) unitOfMeasure
                           msrPrice:(float) msrPrice

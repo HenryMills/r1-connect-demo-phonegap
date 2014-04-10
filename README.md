@@ -2,7 +2,7 @@
 
 ### Platform Support
 
-This plugin supports PhoneGap/Cordova apps running on both iOS and Android.
+This plugin supports PhoneGap/Cordova apps running on iOS, Android and Windows Phone 8.
 
 ### Version Requirements
 
@@ -10,7 +10,16 @@ This plugin is meant to work with PhoneGap 3.0.0+
 
 ## Installation
 
-#### Automatic Installation using PhoneGap/Cordova CLI (iOS and Android)
+#### Overview
+
+This integration doc assumes you have already set up Google Play Services in your application project for android, which is needed to use Google Cloud Messaging (GCM), the notification gateway R1 Connect utilizes. Also you will need to have created the app you will be using in R1 Connect.
+
+In order to use R1 Connect with your application you will need a project number (sender ID) and API key from Google. Please visit “GCM Getting Started” [here](http://developer.android.com/intl/ru/google/gcm/gs.html) and create a google project and an API key.
+
+If you do not want to use Push on android you can skip Google Play Services setup (but we recommend not skip this setup); 
+
+
+#### Automatic Installation using PhoneGap/Cordova CLI (iOS, Android and WP8)
 1. Install this plugin using PhoneGap/Cordova cli:
 
 		cordova plugin add https://github.com/radiumone/r1-connect-demo-phonegap
@@ -19,15 +28,29 @@ This plugin is meant to work with PhoneGap 3.0.0+
 2. Modify the www/config.xml ( res/xml/config.xml for android ) directory to contain (replacing with your configuration settings) :
 Required (for Emitter only):
 
-		<preference name="com.radiumone.r1connect.applicationId" value="Your application Id" />
+	<preference name="com.radiumone.r1connect.applicationId" value="Your application Id" />
 
-If you want to use Push on both platforms:
+If you want to use Push on all platforms:
 
-	    <preference name="com.radiumone.r1connect.clientKey" value="Your client Key" />
+	<preference name="com.radiumone.r1connect.clientKey" value="Your client Key" />
 
 If you want to use Push on Android:
 
-		<preference name="com.radiumone.r1connect.senderId" value="Your GCM sender id" />
+	<preference name="com.radiumone.r1connect.senderId" value="Your GCM sender id" />
+
+If you want to use Push on WP8:
+
+
+    <preference name="com.radiumone.r1connect.MPNSServiceName" value="[YOUR SERVICE NAME]" />
+    <preference name="com.radiumone.r1connect.MPNSChannelName" value="[YOUR PUSH CHANNEL]" />
+    <preference name="com.radiumone.r1connect.TileAllowedDomains" value="[TILE DOMAIN 1], [TILE DOMAIN 2]" />
+		
+If you have set up Google Play Services add this line
+
+	<meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+		
 
 #### iOS manual installation (unnecessary if installed automatically)
 1. Copy all files from src/ios with subfolders to your project
@@ -44,7 +67,7 @@ If you want to use Push on Android:
         SystemConfiguration.framework
         Security.framework
 
-1. Modify the cordova config.xml file to include the PushNotificationPlugin and preferences:
+1. Modify the cordova config.xml file to include the R1ConnectPlugin and preferences:
 
 
         <feature name="R1ConnectPlugin">
@@ -72,7 +95,6 @@ If you want to use Push on Android:
     	<uses-permission android:name="android.permission.VIBRATE" />
     	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
     	<uses-permission android:name="android.permission.WAKE_LOCK" />
-    	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
     	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -102,6 +124,12 @@ If you want to use Push on Android:
         </receiver>
         <service android:name="com.radiumone.emitter.push.R1ConnectService" />
         <service android:name="com.radiumone.emitter.location.LocationService" />
+        
+If you have set up Google Play Services add this line
+
+	<meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
 
 1. Modify the cordova config.xml file to include the PushNotificationPlugin:
@@ -120,6 +148,35 @@ If you want to use Push on Android:
 
 1. Require the R1Connect module `var R1Connect = require('<Path to R1Connect.js>')`
 
+#### Windows Phone 8 manual installation (unnecessary if installed automatically)
+
+1. Copy all files from src/wp8 with subfolders to your project
+2. Select PROJECT -> Add Reference...
+3. In opened "Reference Manager" window press "Browse"
+4. Select copied libraries *R1ConnectLibrary.dll*, *Newtonsoft.Json.dll* and *protobuf-net.dll*
+5. Check your application Capabilities. For it
+6. Open [Your project]->Properties->WMAppManifest.xml in Solution Explorer.
+7. Select *Capabilities* tab
+8. Check ID_CAP_NETWORKING, ID_CAP_IDENTITY_DEVICE, ID_CAP_LOCATION
+9. Check ID_CAP_PUSH_NOTIFICATION if you want use R1 Connect Push
+
+
+1. Modify the cordova config.xml file to include the R1ConnectPlugin and preferences:
+
+	<feature name="R1ConnectPlugin">
+		<param name="wp-package" value="R1ConnectPlugin" />
+		<param name="onload" value="true" />
+	</feature>
+
+    <preference name="com.radiumone.r1connect.applicationId" value="[Your application Id]" />
+    <preference name="com.radiumone.r1connect.clientKey" value="[Your client key]" />
+    <preference name="com.radiumone.r1connect.senderId" value="Your GCM sender id" />
+    <preference name="com.radiumone.r1connect.MPNSServiceName" value="[YOUR SERVICE NAME]" />
+    <preference name="com.radiumone.r1connect.MPNSChannelName" value="[YOUR PUSH CHANNEL]" />
+
+1. Copy www/R1Connect.js into the project's www directory
+
+1. Require the R1Connect module `var R1Connect = require('<Path to R1Connect.js>')`
 
 ## R1Connect methods
 
@@ -334,7 +391,9 @@ Some events are emitted automatically when the state of the application is chang
 
 Pre-Defined Events are also helpful in measuring certain metrics within the apps and do not require further developer input to function. These particular events below are used to help measure app open events and track Sessions.
 **Application Opened** - This event is very useful for push notifications and can measure when your app is opened after a message is sent.
-**Session End** - As the name implies the Session End event is used to end a session and passes with it a Session Length attribute that calculates the session length in seconds.
+**Session Start** - As the name implies the Session Start event is used to start a new session.
+
+**Session End** - The Session End event is used to end a session and passes with it a Session Length attribute that calculates the session length in seconds.
 
 ##### User-Defined Events
 
@@ -342,11 +401,16 @@ User-Defined Events are not sent automatically so it is up to you if you want to
 
 *Note: The last argument in all of the following emitter callbacks, otherInfo, is a dictionary of “key”,”value” pairs or nil*
 
-**Action**
+**User Info**
 
-A generic user action, such as a button click.
+This event enables you to send user profiles to the backend.
 
-	R1Emitter.emitAction("Button pressed", @"About", 10, {"custom_key":"value"});
+	var userInfo = {"userID":"userId", "userName":"userName", "email":"email",
+                    "firstName":"firstName", "lastName":"lastName",
+                    "streetAddress":"streetAddress", "phone":"phone",
+                    "city":"city", "state":"state", "zip":"zip"};
+
+	R1Emitter.emitUserInfo(userInfo, {"custom_key":"value"});
 
 **Login**
 
@@ -356,11 +420,11 @@ Tracks a user login within the app
 
 **Registration**
 
-Records a user registration within the app	R1Emitter.emitRegistration("userId", "userName", "user@email.com", "streetAddress", "phone", "city", "state", "zip", {"custom_key":"value"});**Facebook connect**
+Records a user registration within the app	R1Emitter.emitRegistration("userId", "userName", "country", "state", "city", {"custom_key":"value"});**Facebook connect**
 
 Allows access to Facebook services
 
-	R1Emitter.emitFBConnect("12345", "user_name", [{name:"photos", granted:true}], {"custom_key":"value"});
+	R1Emitter.emitFBConnect([{name:"photos", granted:true}], {"custom_key":"value"});
 
 **Twitter connect**
 
@@ -523,20 +587,35 @@ Notify the push *deviceToken* has changed
 
 ##### R1Push.foregroundNotification
 
+For iOS and Android:
 Notify when a push notification is recieved when the application is running in the foreground
+
+For Windows Phone 8:
+Notify when a Toast notification is recieved when the application is running in the foreground
 
 	document.addEventListener("R1Push.foregroundNotification", function(event) {
 		// event - object with full information about notification
-		alert(event.aps.alert);
+		alert(event);
     }, false);
     
 ##### R1Push.backgroundNotification
 
+Only for iOS and Android!
 Notify when a push notification is received when the application is running in the background and the app is opened by this notification
 
 	document.addEventListener("R1Push.backgroundNotification", function(event) {
 		// event - object with full information about notification
 		alert(event.aps.alert);
+    }, false);
+
+##### R1Push.foregroundHttpNotification
+
+Only for Windows Phone 8:
+Notify when a Raw notification is recieved when the application is running in the foreground
+
+	document.addEventListener("R1Push.foregroundHttpNotification", function(event) {
+		// event - object with full information about notification
+		alert(event);
     }, false);
     
 ## Example

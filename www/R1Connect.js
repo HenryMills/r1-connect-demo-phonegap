@@ -1,4 +1,4 @@
-var R1SDK = function() {}
+cordova.define("com.radiumone.R1Connect.phonegap.R1Connect", function(require, exports, module) { var R1SDK = function() {}
 
 R1SDK.prototype.call_native = function(callback, name, args) {
      if (arguments.length == 2) {
@@ -14,6 +14,16 @@ R1SDK.prototype.isIOS = function() {
           return true;
      if (device.platform == "iPad")
           return true;
+     return false;
+}
+
+R1SDK.prototype.isWP = function() {
+     if (device.platform == null || device.platform === undefined)
+          return false;
+
+     if (device.platform.indexOf("Win") == 0)
+          return true;
+
      return false;
 }
 
@@ -105,20 +115,20 @@ R1Emitter.prototype.emitEvent = function(eventName, eventParameters) {
      window.R1SDK.call_native(null, "emitter_emitEvent", [eventName, eventParameters]);
 }
 
-R1Emitter.prototype.emitAction = function(actionName, actionLabel, actionValue, otherInfo) {
-     window.R1SDK.call_native(null, "emitter_emitAction", [actionName, actionLabel, actionValue, otherInfo]);
+R1Emitter.prototype.emitUserInfo = function(userInfo, otherInfo) {
+     window.R1SDK.call_native(null, "emitter_emitUserInfo", [userInfo, otherInfo]);
 }
 
 R1Emitter.prototype.emitLogin = function(userID, userName, otherInfo) {
      window.R1SDK.call_native(null, "emitter_emitLogin", [userID, userName, otherInfo]);
 }
 
-R1Emitter.prototype.emitRegistration = function(userID, userName, email, streetAddress, phone, city, state, zip, otherInfo) {
-     window.R1SDK.call_native(null, "emitter_emitRegistration", [userID, userName, email, streetAddress, phone, city, state, zip, otherInfo]);
+R1Emitter.prototype.emitRegistration = function(userID, userName, country, state, city, otherInfo) {
+     window.R1SDK.call_native(null, "emitter_emitRegistration", [userID, userName, country, state, city, otherInfo]);
 }
 
-R1Emitter.prototype.emitFBConnect = function(userID, userName, permissions, otherInfo) {
-     window.R1SDK.call_native(null, "emitter_emitFBConnect", [userID, userName, permissions, otherInfo]);
+R1Emitter.prototype.emitFBConnect = function(permissions, otherInfo) {
+     window.R1SDK.call_native(null, "emitter_emitFBConnect", [permissions, otherInfo]);
 }
 
 R1Emitter.prototype.emitTConnect = function(userID, userName, permissions, otherInfo) {
@@ -213,3 +223,4 @@ R1Push.prototype.getTags = function(callback) {
 
 window.R1Emitter = new R1Emitter();
 window.R1Push = new R1Push();
+});

@@ -82,8 +82,16 @@
     
     R1EmitterLineItem *lineItem = [[R1EmitterLineItem alloc] init];
     
-    lineItem.productID = [self getString:info[@"productID"]];
-    lineItem.productName = [self getString:info[@"productName"]];
+    if (info[@"productID"] != nil)
+        lineItem.itemID = [self getString:info[@"productID"]];
+    else
+        lineItem.itemID = [self getString:info[@"itemID"]];
+    
+    if (info[@"productName"] != nil)
+        lineItem.itemName = [self getString:info[@"productName"]];
+    else
+        lineItem.itemName = [self getString:info[@"itemName"]];
+
     lineItem.quantity = [self getInteger:info[@"quantity"]];
     lineItem.unitOfMeasure = [self getString:info[@"unitOfMeasure"]];
     lineItem.msrPrice = [self getDouble:info[@"msrPrice"]];
@@ -93,6 +101,30 @@
     
     return lineItem;
 }
+
+- (R1EmitterUserInfo *) getUserInfoFromCommand:(CDVInvokedUrlCommand *) command parameterIndex:(NSInteger) parameterIndex
+{
+    NSDictionary *info = [self getDictionaryFromCommand:command parameterIndex:parameterIndex];
+    
+    if (![info isKindOfClass:[NSDictionary class]])
+        return nil;
+    
+    R1EmitterUserInfo *userInfo = [[R1EmitterUserInfo alloc] init];
+    
+    userInfo.userID        = [self getString:info[@"userID"]];
+    userInfo.userName      = [self getString:info[@"userName"]];
+    userInfo.email         = [self getString:info[@"email"]];
+    userInfo.firstName     = [self getString:info[@"firstName"]];
+    userInfo.lastName      = [self getString:info[@"lastName"]];
+    userInfo.streetAddress = [self getString:info[@"streetAddress"]];
+    userInfo.phone         = [self getString:info[@"phone"]];
+    userInfo.city          = [self getString:info[@"city"]];
+    userInfo.state         = [self getString:info[@"state"]];
+    userInfo.zip           = [self getString:info[@"zip"]];
+    
+    return userInfo;
+}
+
 
 - (void) emitter_isStarted:(CDVInvokedUrlCommand *)command
 {
@@ -209,24 +241,23 @@
     }];
 }
 
-- (void) emitter_emitAction:(CDVInvokedUrlCommand *)command
+- (void) emitter_emitUserInfo:(CDVInvokedUrlCommand *)command
 {
-    if ([self testFailedCommand:command parametersCount:4])
+    if ([self testFailedCommand:command parametersCount:2])
         return;
 
     [self dispatch:^{
-        NSString *action = [self getStringFromCommand:command parameterIndex:0];
         
-        if (action == nil)
+        R1EmitterUserInfo *userInfo = [self getUserInfoFromCommand:command parameterIndex:0];
+        
+        if (userInfo == nil)
         {
             [self sendWrongParameterToCommand:command];
             return;
         }
         
-        [[R1Emitter sharedInstance] emitAction:action
-                                         label:[self getStringFromCommand:command parameterIndex:1]
-                                         value:[self getLongFromCommand:command parameterIndex:2]
-                                     otherInfo:[self getDictionaryFromCommand:command parameterIndex:3]];
+        [[R1Emitter sharedInstance] emitUserInfo:userInfo
+                                       otherInfo:[self getDictionaryFromCommand:command parameterIndex:1]];
         
         [self sendOkResultToCommand:command];
     }];
@@ -248,19 +279,16 @@
 
 - (void) emitter_emitRegistration:(CDVInvokedUrlCommand *)command
 {
-    if ([self testFailedCommand:command parametersCount:9])
+    if ([self testFailedCommand:command parametersCount:6])
         return;
     
     [self dispatch:^{
         [[R1Emitter sharedInstance] emitRegistrationWithUserID:[self getStringFromCommand:command parameterIndex:0]
                                                       userName:[self getStringFromCommand:command parameterIndex:1]
-                                                         email:[self getStringFromCommand:command parameterIndex:2]
-                                                 streetAddress:[self getStringFromCommand:command parameterIndex:3]
-                                                         phone:[self getStringFromCommand:command parameterIndex:4]
-                                                          city:[self getStringFromCommand:command parameterIndex:5]
-                                                         state:[self getStringFromCommand:command parameterIndex:6]
-                                                           zip:[self getStringFromCommand:command parameterIndex:7]
-                                                     otherInfo:[self getDictionaryFromCommand:command parameterIndex:8]];
+                                                       country:[self getStringFromCommand:command parameterIndex:2]
+                                                         state:[self getStringFromCommand:command parameterIndex:3]
+                                                          city:[self getStringFromCommand:command parameterIndex:4]
+                                                     otherInfo:[self getDictionaryFromCommand:command parameterIndex:5]];
         
         [self sendOkResultToCommand:command];
     }];
@@ -268,14 +296,12 @@
 
 - (void) emitter_emitFBConnect:(CDVInvokedUrlCommand *)command
 {
-    if ([self testFailedCommand:command parametersCount:4])
+    if ([self testFailedCommand:command parametersCount:2])
         return;
 
     [self dispatch:^{
-        [[R1Emitter sharedInstance] emitFBConnectWithUserID:[self getStringFromCommand:command parameterIndex:0]
-                                                   userName:[self getStringFromCommand:command parameterIndex:1]
-                                                permissions:[self getPermissionsArrayFromCommand:command parameterIndex:2]
-                                                  otherInfo:[self getDictionaryFromCommand:command parameterIndex:3]];
+        [[R1Emitter sharedInstance] emitFBConnectWithPermissions:[self getPermissionsArrayFromCommand:command parameterIndex:0]
+                                                       otherInfo:[self getDictionaryFromCommand:command parameterIndex:1]];
         
         [self sendOkResultToCommand:command];
     }];

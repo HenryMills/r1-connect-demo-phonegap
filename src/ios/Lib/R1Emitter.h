@@ -1,4 +1,5 @@
 #import "R1EmitterLineItem.h"
+#import "R1EmitterUserInfo.h"
 #import "R1EmitterSocialPermission.h"
 
 @interface R1Emitter : NSObject
@@ -40,7 +41,7 @@
  information indicating that it is the start of a session, and this flag will be
  cleared.
  */
-@property(nonatomic, assign) BOOL sessionStart;
+@property(nonatomic, assign) BOOL sessionStart __attribute__((deprecated));
 
 /*!
  If non-negative, indicates how long, in seconds, the application must
@@ -73,7 +74,10 @@
 - (void) emitAction:(NSString *) action
               label:(NSString *) label
               value:(uint64_t) value
-          otherInfo:(NSDictionary *) otherInfo;
+          otherInfo:(NSDictionary *) otherInfo __attribute__((deprecated));
+
+- (void) emitUserInfo:(R1EmitterUserInfo *) userInfo
+            otherInfo:(NSDictionary *) otherInfo;
 
 - (void) emitLoginWithUserID:(NSString *) userID
                     userName:(NSString *) userName
@@ -81,18 +85,13 @@
 
 - (void) emitRegistrationWithUserID:(NSString *) userID
                            userName:(NSString *) userName
-                              email:(NSString *) email
-                      streetAddress:(NSString *) streetAddress
-                              phone:(NSString *) phone
-                               city:(NSString *) city
+                            country:(NSString *) country
                               state:(NSString *) state
-                                zip:(NSString *) zip
+                               city:(NSString *) city
                           otherInfo:(NSDictionary *) otherInfo;
 
-- (void) emitFBConnectWithUserID:(NSString *) userID
-                        userName:(NSString *) userName
-                     permissions:(NSArray *) permissions
-                       otherInfo:(NSDictionary *) otherInfo;
+- (void) emitFBConnectWithPermissions:(NSArray *) permissions
+                            otherInfo:(NSDictionary *) otherInfo;
 
 - (void) emitTConnectWithUserID:(NSString *) userID
                        userName:(NSString *) userName

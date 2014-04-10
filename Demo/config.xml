@@ -14,5 +14,10 @@
     
     <preference name="com.radiumone.r1connect.applicationId" value="[Your application Id]" />
     <preference name="com.radiumone.r1connect.clientKey" value="[Your client key]" />
+
     <preference name="com.radiumone.r1connect.senderId" value="Your GCM sender id" />
+
+    <preference name="com.radiumone.r1connect.MPNSServiceName" value="[YOUR SERVICE NAME]" />
+    <preference name="com.radiumone.r1connect.MPNSChannelName" value="[YOUR PUSH CHANNEL]" />
+    <preference name="com.radiumone.r1connect.TileAllowedDomains" value="[TILE DOMAIN 1], [TILE DOMAIN 2]" />
 </widget>

@@ -2,6 +2,8 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
     R1SDK.isStarted(function(started) {
+		$("#main_loading").hide();
+
         if (started) {
             $("#main_error").hide();
             $("#main_normal").show();
@@ -161,8 +163,6 @@ function configurePushOptions() {
 
     if (!R1SDK.isIOS()) {
         $("#push_options_page_badge_number_group").hide();
-
-        return;
     }
 
     R1Push.getDeviceToken(function(deviceToken) {
@@ -260,7 +260,7 @@ function locationUpdateNowPressed() {
 function objectFromField(field) {
     var parametersStr = field.val();
     var parameters = null
-    if (parametersStr != "") {
+    if (parametersStr != "" && parametersStr !== undefined) {
         try {
             parameters = JSON.parse(parametersStr);
         } catch (err) {
@@ -285,20 +285,25 @@ function emitEventPressed() {
     R1Emitter.emitEvent(name, parameters);
 }
 
-function emitActionPressed() {
-    var action = $("#emit_action_page_action").val();
+function emitUserInfoPressed() {
+    var userID = $("#emit_user_info_page_user_id").val();
+    var userName = $("#emit_user_info_page_user_name").val();
+    var email = $("#emit_user_info_page_email").val();
+    var firstName = $("#emit_user_info_page_first_name").val();
+    var lastName = $("#emit_user_info_page_last_name").val();
+    var streetAddress = $("#emit_user_info_page_street_address").val();
+    var phone = $("#emit_user_info_page_phone").val();
+    var city = $("#emit_user_info_page_city").val();
+    var state = $("#emit_user_info_page_state").val();
+    var zip = $("#emit_user_info_page_zip").val();
 
-    if (action == "") {
-        alert("Event action is empty");
-        return;
-    }
+    var userInfo = {"userID":userID, "userName":userName, "email":email,
+                    "firstName":firstName, "lastName":lastName, "streetAddress":streetAddress,
+                    "phone":phone, "city":city, "state":state, "zip":zip};
 
-    var label = $("#emit_action_page_label").val();
-    var value = $("#emit_action_page_value").val();
+    var otherInfo = objectFromField($("#emit_user_info_page_other_info"));
 
-    var otherInfo = objectFromField($("#emit_action_page_other_info"));
-
-    R1Emitter.emitAction(action, label, value, otherInfo);
+    R1Emitter.emitUserInfo(userInfo, otherInfo);
 }
 
 function emitLoginPressed() {
@@ -313,16 +318,13 @@ function emitLoginPressed() {
 function emitRegistrationPressed() {
     var userID = $("#emit_registration_page_user_id").val();
     var userName = $("#emit_registration_page_user_name").val();
-    var email = $("#emit_registration_page_email").val();
-    var streetAddress = $("#emit_registration_page_street_address").val();
-    var phone = $("#emit_registration_page_phone").val();
-    var city = $("#emit_registration_page_city").val();
+    var country = $("#emit_registration_page_country").val();
     var state = $("#emit_registration_page_state").val();
-    var zip = $("#emit_registration_page_zip").val();
+    var city = $("#emit_registration_page_city").val();
 
     var otherInfo = objectFromField($("#emit_registration_page_other_info"));
 
-    R1Emitter.emitRegistration(userID, userName, email, streetAddress, phone, city, state, zip, otherInfo);
+    R1Emitter.emitRegistration(userID, userName, country, state, city, otherInfo);
 }
 
 function fbConnectAddPermissionPressed() {
@@ -372,9 +374,6 @@ function deleteFBSocialPermission(index) {
 }
 
 function emitFBConnectPressed() {
-    var userID = $("#emit_fbconnect_page_user_id").val();
-    var userName = $("#emit_fbconnect_page_user_name").val();
-
     var permissions = [];
 
     $("#emit_fbconnect_page_social_permissions_list li").each(function() {
@@ -384,11 +383,9 @@ function emitFBConnectPressed() {
         }
     });
 
-
     var otherInfo = objectFromField($("#emit_fbconnect_page_other_info"));
 
-    R1Emitter.emitFBConnect(userID, userName, permissions, otherInfo);
-
+    R1Emitter.emitFBConnect(permissions, otherInfo);
 }
 
 function tConnectAddPermissionPressed() {
