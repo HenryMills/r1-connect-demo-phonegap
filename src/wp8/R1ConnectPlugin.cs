@@ -210,6 +210,41 @@ namespace WPCordovaClassLib.Cordova.Commands
             });
         }
 
+        public void isAdvertisingEnabled(string json)
+        {
+            ExecuteAndWait(() =>
+            {
+                // TBD: Now R1Connect SDK for WP doesn't have this property
+
+                DispathOkResult(true);
+            });
+        }
+
+        public void setAdvertisingEnabled(string json)
+        {
+            string[] args = JSON.JsonHelper.Deserialize<string[]>(json);
+
+            if (args.Length < 2)
+            {
+                DispathWrongParametersResult();
+                return;
+            }
+
+            bool newSetEnabled = false;
+            if (!bool.TryParse(args[0], out newSetEnabled))
+            {
+                DispathWrongParametersResult();
+                return;
+            }
+
+            ExecuteAndWait(() =>
+            {
+                // TBD: Now R1Connect SDK for WP doesn't have this property
+
+                DispathOkResult();
+            });
+        }
+
         public void location_isEnabled(string json)
         {
             ExecuteAndWait(() =>

@@ -73,7 +73,7 @@
 
 - (void) emitAction:(NSString *) action
               label:(NSString *) label
-              value:(uint64_t) value
+              value:(int64_t) value
           otherInfo:(NSDictionary *) otherInfo __attribute__((deprecated));
 
 - (void) emitUserInfo:(R1EmitterUserInfo *) userInfo

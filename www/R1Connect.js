@@ -35,6 +35,14 @@ R1SDK.prototype.getApplicationUserId = function(callback) {
      this.call_native(callback, "getApplicationUserId");
 }
 
+R1SDK.prototype.setAdvertisingEnabled = function(advertisingEnabled) {
+     this.call_native(null, "setAdvertisingEnabled", [advertisingEnabled]);
+}
+
+R1SDK.prototype.isAdvertisingEnabled = function(callback) {
+     this.call_native(callback, "isAdvertisingEnabled");
+}
+
 R1SDK.prototype.isStarted = function(callback) {
      this.call_native(callback, "isStarted");
 }

@@ -111,4 +111,26 @@
     }];
 }
 
+- (void) setAdvertisingEnabled:(CDVInvokedUrlCommand *)command
+{
+    if ([command.arguments count] != 1)
+    {
+        [self sendWrongParametersCountToCommand:command];
+        return;
+    }
+
+    [self dispatch:^{
+        [R1SDK sharedInstance].advertisingEnabled = [self getBoolFromCommand:command parameterIndex:0];
+
+        [self sendOkResultToCommand:command];
+    }];
+}
+
+- (void) isAdvertisingEnabled:(CDVInvokedUrlCommand *)command
+{
+    [self dispatch:^{
+        [self sendOkResultToCommand:command withBool:[R1SDK sharedInstance].advertisingEnabled];
+    }];
+}
+
 @end

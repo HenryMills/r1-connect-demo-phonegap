@@ -191,6 +191,23 @@ Indicates whether the SDK is started. The SDK started automatically if you sette
 	R1SDK.isStarted(function (isStarted) {
 		//...
     });
+    
+#### setAdvertisingEnabled
+
+Indicates (to the SDK) whether or not the application is displaying advertisiments. A value of true prevents the SDK from accessing IDFA to comply with Apple's advertising policy when advertisements are served within the application (outside of the SDK).
+
+	R1SDK.setAdvertisingEnabled(true);
+
+#### isAdvertisingEnabled
+
+*Callback arguments:* (bool isAdvertisingEnabled)
+
+Indicates (to the SDK) whether or not the application is displaying advertisiments. A value of true prevents the SDK from accessing IDFA to comply with Apple's advertising policy when advertisements are served within the application (outside of the SDK).
+
+	R1SDK.isAdvertisingEnabled(function (isAdvertisingEnabled) {
+		//...
+    });
+
 
 #### setApplicationUserId
 

@@ -9,6 +9,8 @@
 
 @property(nonatomic, copy) NSString *applicationUserId;
 
+@property(nonatomic, assign) BOOL advertisingEnabled;
+
 /*!
  The current user location.
  Use this variable only if your application already used location services.

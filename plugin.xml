@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.radiumone.R1Connect.phonegap"
-    version="2.0.0">
+    version="2.1.0">
 
     <name>R1Connect Plugin</name>
     
@@ -142,7 +142,6 @@
 
     	<source-file src="src/wp8/R1ConnectPlugin.cs" />
 
-    	<framework src="src/wp8/Library/protobuf-net.dll" custom="true" />
     	<framework src="src/wp8/Library/Newtonsoft.Json.dll" custom="true" />
 		<framework src="src/wp8/Library/R1ConnectLibrary.dll" custom="true" />
     </platform>

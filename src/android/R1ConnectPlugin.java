@@ -83,6 +83,13 @@ public class R1ConnectPlugin extends CordovaPlugin{
                     callbackContext.sendPluginResult(pluginResult);
                     return true;
 
+                } else if ("isAdvertisingEnabled".equals(action)){
+
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, R1Emitter.getInstance().isAdvertisingEnabled());
+                    pluginResult.setKeepCallback(true);
+                    callbackContext.sendPluginResult(pluginResult);
+                    return true;
+
                 } else if ("location_setEnabled".equals(action)){
 
                     R1PushPreferences.getInstance(applicationContext).setLocationEnable(true);
@@ -116,6 +123,16 @@ public class R1ConnectPlugin extends CordovaPlugin{
                 } else if ("location_getState".equals(action)){
                     callbackContext.success();
                     return true;
+                } else if ("setAdvertisingEnabled".equals(action)){
+                    if ( args != null && args.length() > 0 ){
+                        Boolean advertisingEnabled = getBooleanFromParameter(args, 0);
+                        R1Emitter.getInstance().setAdvertisingEnabled(advertisingEnabled);
+                        callbackContext.success();
+                    } else {
+                        callbackContext.error(WRONG_PARAMETERS_COUNT);
+                    }
+                    return true;
+
                 } else if ("setApplicationUserId".equals(action)){
 
                     if ( args != null && args.length() > 0 ){

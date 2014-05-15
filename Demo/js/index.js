@@ -32,6 +32,16 @@ function onDeviceReady() {
 }
 
 function configureSharedOptions() {
+    R1SDK.isAdvertisingEnabled(function(advertisingEnabled) {
+        var isAdvertisingEnabledField = $('#shared_options_page_advertising_enabled');
+
+        isAdvertisingEnabledField.val(advertisingEnabled ? 'on' : 'off').change()
+
+        isAdvertisingEnabledField.change(function() {
+            R1SDK.setAdvertisingEnabled((isAdvertisingEnabledField.val() == "on"));
+        });
+    });
+
     R1SDK.getApplicationUserId(function(applicationUserId) {
         var appUserIdInput = $('#shared_options_page_app_user_id');
 
