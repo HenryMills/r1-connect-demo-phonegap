@@ -1,4 +1,4 @@
-cordova.define("com.radiumone.R1Connect.phonegap.R1Connect", function(require, exports, module) { var R1SDK = function() {}
+var R1SDK = function() {}
 
 R1SDK.prototype.call_native = function(callback, name, args) {
      if (arguments.length == 2) {
@@ -231,4 +231,3 @@ R1Push.prototype.getTags = function(callback) {
 
 window.R1Emitter = new R1Emitter();
 window.R1Push = new R1Push();
-});
