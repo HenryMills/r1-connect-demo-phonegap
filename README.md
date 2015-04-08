@@ -504,7 +504,7 @@ Basically, a page view, it provides info about that screen
 	R1Emitter.emitEvent("Your custom event name");
 	
 	// Emits a custom event with parameters
-	R1Emitter.emitEvent(@"Your custom event name", {"key":"value"});
+	R1Emitter.emitEvent("Your custom event name", {"key":"value"});
 
 ### R1Push
 
