@@ -88,7 +88,7 @@ If you want to disable sending all advertising ids to the server add this line
 1. Require the R1Connect module `var R1Connect = require('<Path to R1Connect.js>')`
 
 #### Android manual installation (unnecessary if installed automatically)
-1. Copy src/Android/R1ConnectPlugin.java file to your projects src/com/radiumone/cordova/plugin/ directory
+1. Copy src/Android/R1ConnectPlugin.java and src/Android/CordovaPushReceiver.java files to your projects src/com/radiumone/cordova/plugin/ directory
 1. Copy src/Android/*.jar files to your projects libs directory
 2. Copy src/Android/r1connect.properties to your assets directory
 
