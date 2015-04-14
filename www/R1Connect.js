@@ -35,12 +35,20 @@ R1SDK.prototype.getApplicationUserId = function(callback) {
      this.call_native(callback, "getApplicationUserId");
 }
 
-R1SDK.prototype.setAdvertisingEnabled = function(advertisingEnabled) {
-     this.call_native(null, "setAdvertisingEnabled", [advertisingEnabled]);
+R1SDK.prototype.setGeofencingEnabled = function(geofencingEnabled) {
+     this.call_native(null, "setGeofencingEnabled", [geofencingEnabled]);
 }
 
-R1SDK.prototype.isAdvertisingEnabled = function(callback) {
-     this.call_native(callback, "isAdvertisingEnabled");
+R1SDK.prototype.isGeofencingEnabled = function(callback) {
+     this.call_native(callback, "isGeofencingEnabled");
+}
+
+R1SDK.prototype.setEngageEnabled = function(engageEnabled) {
+     this.call_native(null, "setEngageEnabled", [engageEnabled]);
+}
+
+R1SDK.prototype.isEngageEnabled = function(callback) {
+     this.call_native(callback, "isEngageEnabled");
 }
 
 R1SDK.prototype.isStarted = function(callback) {
@@ -195,6 +203,10 @@ R1Push.prototype.isEnabled = function(callback) {
 
 R1Push.prototype.getDeviceToken = function(callback) {
      window.R1SDK.call_native(callback, "push_getDeviceToken");
+}
+
+R1Push.prototype.getKeyValues = function(callback) {
+     window.R1SDK.call_native(callback, "push_getKeyValues");
 }
 
 R1Push.prototype.setBadgeNumber = function(badgeNumber) {

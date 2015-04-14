@@ -9,7 +9,10 @@
 
 @property(nonatomic, copy) NSString *applicationUserId;
 
-@property(nonatomic, assign) BOOL advertisingEnabled;
+@property(nonatomic, assign) BOOL disableAllAdvertisingIds;
+
+@property(nonatomic, assign) BOOL geofencingEnabled;
+@property(nonatomic, assign) BOOL engageEnabled;
 
 /*!
  The current user location.
@@ -27,14 +30,6 @@
 - (void) startPush;
 
 - (void) start; // Start emitter and push
-
-// Show Push options
-+ (void) presendModalPushOptionsFromViewController:(UIViewController *) viewController animated:(BOOL)animated;
-+ (void) showPushOptionsInNavigationController:(UINavigationController *) navigationController animated:(BOOL)animated;
-
-// Show Location options
-+ (void) presendModalLocationOptionsFromViewController:(UIViewController *) viewController animated:(BOOL)animated;
-+ (void) showLocationOptionsInNavigationController:(UINavigationController *) navigationController animated:(BOOL)animated;
 
 + (NSString *) sha1:(NSString *) inputString;
 + (NSString *) md5:(NSString *) inputString;

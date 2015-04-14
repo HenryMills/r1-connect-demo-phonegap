@@ -1,598 +1,650 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 
-        <link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css" />
-        <script src="js/jquery-1.11.0.min.js"></script>
-        <script src="js/jquery.mobile-1.4.2.min.js"></script>
-        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-        <script src="js/index.js"></script>
-        <title>R1Connect Demo</title>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 
-    </head>
-    <body>
-        <div data-role="page" id="main">
-            <div data-role="header">
-                <h1>R1Connect Demo</h1>
-            </div>
-        
-            <div data-role="content">
-            
-                <div id="main_loading">
-                  <center>
-                    <h1>Loading...</h1>
-                  </center>
-                </div>
-              
-                <div id="main_error" style="display: none;">
-                    <h1>R1Connect SDK Not initialized!</h1>
-                    <div>
-                        Add to your config file:<br/>
-                        com.radiumone.r1connect.applicationId<br/>
-                        com.radiumone.r1connect.clientKey
-                    </div>
-                </div>
-        
-                <div id="main_normal" style="display: none;">
-                    <ul data-role="listview" data-inset="true" id="shared_options">
-                        <li><a href="#shared_options_page">Shared Options</a></li>
-                    </ul>
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css" />
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery.mobile-1.4.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script src="js/index.js"></script>
+    <title>R1Connect Demo</title>
 
-                    <ul data-role="listview" data-inset="true" id="emitter_options">
-                        <li><a href="#emitter_options_page">Emitter Options</a></li>
-                        <li><a href="#emitter_methods_page">Emitter Methods</a></li>
-                    </ul>
+</head>
 
-                    <ul data-role="listview" data-inset="true" id="push_options">
-                        <li><a href="#push_options_page">Push Options</a></li>
-                    </ul>
-                </div>
-
-            </div>
+<body>
+    <div data-role="page" id="main">
+        <div data-role="header">
+            <h1>R1Connect Demo</h1>
         </div>
-        
-        <div data-role="page" id="shared_options_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Shared Options</h1>
+
+        <div data-role="content">
+
+            <div id="main_loading">
+                <center>
+                    <h1>Loading...</h1>
+                </center>
             </div>
-            
-            <div data-role="content">
-                <label for="shared_options_page_advertising_enabled">Advertising Enabled:</label>
-                <select name="shared_options_page_advertising_enabled" id="shared_options_page_advertising_enabled" data-role="slider">
+
+            <div id="main_error" style="display: none;">
+                <h1>R1Connect SDK Not initialized!</h1>
+                <div>
+                    Add to your config file:
+                    <br/> com.radiumone.r1connect.applicationId
+                    <br/> com.radiumone.r1connect.clientKey
+                </div>
+            </div>
+
+            <div id="main_normal" style="display: none;">
+                <ul data-role="listview" data-inset="true" id="shared_options">
+                    <li><a href="#shared_options_page">Shared Options</a>
+                    </li>
+                </ul>
+
+                <ul data-role="listview" data-inset="true" id="emitter_options">
+                    <li><a href="#emitter_options_page">Emitter Options</a>
+                    </li>
+                    <li><a href="#emitter_methods_page">Emitter Methods</a>
+                    </li>
+                </ul>
+
+                <ul data-role="listview" data-inset="true" id="push_options">
+                    <li><a href="#push_options_page">Push Options</a>
+                    </li>
+                </ul>
+
+                <ul data-role="listview" data-inset="true" id="other_options">
+                    <li><a href="#other_options_page">Other Options</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div data-role="page" id="shared_options_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Shared Options</h1>
+        </div>
+
+        <div data-role="content">
+
+            <label>Application User ID:</label>
+            <input type="text" id="shared_options_page_app_user_id" value="" />
+
+            <ul data-role="listview" data-inset="true">
+                <li><a href="#shared_options_location_page">Location Service</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div data-role="page" id="shared_options_location_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Location Service Options</h1>
+        </div>
+
+        <div data-role="content">
+            <div>
+                <label for="shared_options_location_page_enabled">Location Enabled:</label>
+                <select name="shared_options_location_page_enabled" id="shared_options_location_page_enabled" data-role="slider">
                     <option value="off">Off</option>
                     <option value="on">On</option>
                 </select>
+            </div>
 
-                <label>Application User ID:</label>
-                <input type="text" id="shared_options_page_app_user_id" value="" />
-                
-                <ul data-role="listview" data-inset="true">
-                    <li><a href="#shared_options_location_page">Location Service</a></li>
+            <div>
+                <label>Autoupdate Timeout:</label>
+                <input type="text" id="shared_options_location_page_autoupdate_timeout" value="" />
+                <a href="javascript:locationChangeAutoupdateTimeoutPressed();" data-role="button">Change</a>
+            </div>
+
+            <div id="shared_options_location_page_info">
+                <h3>Information:</h3>
+                <table>
+                    <tr>
+                        <td><span>State:</span>
+                        </td>
+                        <td id="shared_options_location_page_info_state"></td>
+                    </tr>
+                    <tr>
+                        <td><span>Location:</span>
+                        </td>
+                        <td id="shared_options_location_page_info_location"></td>
+                    </tr>
+                </table>
+            </div>
+            <a href="javascript:locationUpdateNowPressed();" data-role="button" id="shared_options_location_page_update_now">Update Now</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="emitter_options_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emitter Options</h1>
+        </div>
+
+        <div data-role="content">
+            <label>App Name:</label>
+            <input type="text" id="emitter_options_page_app_name" value="" />
+            <label>App Id:</label>
+            <input type="text" id="emitter_options_page_app_id" value="" />
+            <label>App Version:</label>
+            <input type="text" id="emitter_options_page_app_version" value="" />
+            <label>Session Timeout:</label>
+            <input type="text" id="emitter_options_page_session_timeout" value="" />
+
+        </div>
+    </div>
+
+    <div data-role="page" id="other_options_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Other Options</h1>
+        </div>
+
+        <div data-role="content">
+            <div>
+                <label for="other_options_page_geofencing_enabled">Geofencing Enabled:</label>
+                <select name="other_options_page_geofencing_enabled" id="other_options_page_geofencing_enabled" data-role="slider">
+                    <option value="off">Off</option>
+                    <option value="on">On</option>
+                </select>
+            </div>
+            <div>
+                <label for="other_options_page_engage_enabled">Engage Enabled:</label>
+                <select name="other_options_page_engage_enabled" id="other_options_page_engage_enabled" data-role="slider">
+                    <option value="off">Off</option>
+                    <option value="on">On</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="push_options_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Push Options</h1>
+        </div>
+
+        <div data-role="content">
+            <div>
+                <label for="push_options_page_push_enabled">Push Enabled:</label>
+                <select name="push_options_page_push_enabled" id="push_options_page_push_enabled" data-role="slider">
+                    <option value="off">Off</option>
+                    <option value="on">On</option>
+                </select>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td><span>Device Token:</span>
+                        </td>
+                        <td id="push_options_page_device_token"></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="push_options_page_badge_number_group">
+                <label>Badge Number:</label>
+                <input type="text" id="push_options_page_badge_number" value="" />
+                <a href="javascript:pushChangeBadgePressed();" data-role="button">Change</a>
+            </div>
+            <div>
+                <br/>
+                <ul data-role="listview" id="push_options_page_tags_list">
                 </ul>
+                <br/>
+                <a href="#popupAddTag" data-rel="popup" data-position-to="window" data-role="button">Add Tag</a>
+                <div data-role="popup" id="popupAddTag" data-theme="a" class="ui-corner-all">
+                    <form>
+                        <div style="padding:10px 20px;">
+                            <h3>Enter New Tag:</h3>
+                            <input type="text" id="push_options_page_new_tag" value="" data-theme="a" />
 
-            </div>
-        </div>
-
-        <div data-role="page" id="shared_options_location_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Location Service Options</h1>
-            </div>
-            
-            <div data-role="content">
-                <div>
-                    <label for="shared_options_location_page_enabled">Location Enabled:</label>
-                    <select name="shared_options_location_page_enabled" id="shared_options_location_page_enabled" data-role="slider">
-                        <option value="off">Off</option>
-                        <option value="on">On</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Autoupdate Timeout:</label>
-                    <input type="text" id="shared_options_location_page_autoupdate_timeout" value="" />
-                    <a href="javascript:locationChangeAutoupdateTimeoutPressed();" data-role="button">Change</a>
-                </div>
-
-                <div id="shared_options_location_page_info">
-                    <h3>Information:</h3>
-                    <table> 
-                        <tr> 
-                            <td><span>State:</span></td><td id="shared_options_location_page_info_state"></td> 
-                        </tr>
-                        <tr> 
-                            <td><span>Location:</span></td><td id="shared_options_location_page_info_location"></td> 
-                        </tr>
-                    </table>
-                </div>
-                <a href="javascript:locationUpdateNowPressed();" data-role="button" id="shared_options_location_page_update_now">Update Now</a>
-            </div>
-        </div>
-        
-        <div data-role="page" id="emitter_options_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emitter Options</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>App Name:</label>
-                <input type="text" id="emitter_options_page_app_name" value="" />
-                <label>App Id:</label>
-                <input type="text" id="emitter_options_page_app_id" value="" />
-                <label>App Version:</label>
-                <input type="text" id="emitter_options_page_app_version" value="" />
-                <label>Session Timeout:</label>
-                <input type="text" id="emitter_options_page_session_timeout" value="" />
-                
-            </div>
-        </div>
-        
-        <div data-role="page" id="push_options_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Push Options</h1>
-            </div>
-            
-            <div data-role="content">
-                <div>
-                    <label for="push_options_page_push_enabled">Push Enabled:</label>
-                    <select name="push_options_page_push_enabled" id="push_options_page_push_enabled" data-role="slider">
-                        <option value="off">Off</option>
-                        <option value="on">On</option>
-                    </select>
-                </div>
-                <div>
-                    <table>
-                        <tr>
-                            <td><span>Device Token:</span></td><td id="push_options_page_device_token"></td>
-                        </tr>
-                    </table>
-                </div>
-                <div id="push_options_page_badge_number_group">
-                    <label>Badge Number:</label>
-                    <input type="text" id="push_options_page_badge_number" value="" />
-                    <a href="javascript:pushChangeBadgePressed();" data-role="button">Change</a>
-                </div>
-                <div>
-                    <br/>
-                    <ul data-role="listview" id="push_options_page_tags_list">
-                    </ul>
-                    <br/>
-                    <a href="#popupAddTag" data-rel="popup" data-position-to="window" data-role="button">Add Tag</a>
-                    <div data-role="popup" id="popupAddTag" data-theme="a" class="ui-corner-all">
-                        <form>
-                            <div style="padding:10px 20px;">
-                                <h3>Enter New Tag:</h3>
-                                <input type="text" id="push_options_page_new_tag" value="" data-theme="a" />
-                                
-                                <a data-role="button" href="javascript:pushAddTagPressed();" data-theme="b">Add</a>
-                            </div>
-                        </form>
-                    </div>
+                            <a data-role="button" href="javascript:pushAddTagPressed();" data-theme="b">Add</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        
-        <div data-role="page" id="emitter_methods_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emitter Methods</h1>
-            </div>
-            
-            <div data-role="content">
-                <ul data-role="listview" data-inset="true">
-                    <li><a href="#emit_event_page">Emit Event</a></li>
-                    <li><a href="#emit_user_info_page">Emit User Info</a></li>
-                    <li><a href="#emit_login_page">Emit Login</a></li>
-                    <li><a href="#emit_registration_page">Emit Registration</a></li>
-                    <li><a href="#emit_fbconnect_page">Emit FBConnect</a></li>
-                    <li><a href="#emit_tconnect_page">Emit TConnect</a></li>
-                    <li><a href="#emit_transaction_page">Emit Transaction</a></li>
-                    <li><a href="#emit_transaction_item_page">Emit Transaction Item</a></li>
-                    <li><a href="#emit_cart_create_page">Emit Cart Create</a></li>
-                    <li><a href="#emit_cart_delete_page">Emit Cart Delete</a></li>
-                    <li><a href="#emit_add_to_cart_page">Emit Add To Cart</a></li>
-                    <li><a href="#emit_delete_from_cart_page">Emit Delete From Cart</a></li>
-                    <li><a href="#emit_upgrade_page">Emit Upgrade</a></li>
-                    <li><a href="#emit_trial_upgrade_page">Emit Trial Upgrade</a></li>
-                    <li><a href="#emit_screen_view_page">Emit Screen View</a></li>
+    </div>
+
+    <div data-role="page" id="emitter_methods_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emitter Methods</h1>
+        </div>
+
+        <div data-role="content">
+            <ul data-role="listview" data-inset="true">
+                <li><a href="#emit_event_page">Emit Event</a>
+                </li>
+                <li><a href="#emit_user_info_page">Emit User Info</a>
+                </li>
+                <li><a href="#emit_login_page">Emit Login</a>
+                </li>
+                <li><a href="#emit_registration_page">Emit Registration</a>
+                </li>
+                <li><a href="#emit_fbconnect_page">Emit FBConnect</a>
+                </li>
+                <li><a href="#emit_tconnect_page">Emit TConnect</a>
+                </li>
+                <li><a href="#emit_transaction_page">Emit Transaction</a>
+                </li>
+                <li><a href="#emit_transaction_item_page">Emit Transaction Item</a>
+                </li>
+                <li><a href="#emit_cart_create_page">Emit Cart Create</a>
+                </li>
+                <li><a href="#emit_cart_delete_page">Emit Cart Delete</a>
+                </li>
+                <li><a href="#emit_add_to_cart_page">Emit Add To Cart</a>
+                </li>
+                <li><a href="#emit_delete_from_cart_page">Emit Delete From Cart</a>
+                </li>
+                <li><a href="#emit_upgrade_page">Emit Upgrade</a>
+                </li>
+                <li><a href="#emit_trial_upgrade_page">Emit Trial Upgrade</a>
+                </li>
+                <li><a href="#emit_screen_view_page">Emit Screen View</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_event_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Event</h1>
+        </div>
+
+        <div data-role="content">
+            <label>Event Name:</label>
+            <input type="text" name="name" id="emit_event_page_name" value="" />
+            <label>Event Parameters (in json):</label>
+            <textarea id="emit_event_page_parameters"></textarea>
+
+            <a href="javascript:emitEventPressed();" data-role="button">Emit</a>
+
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_user_info_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit User Info</h1>
+        </div>
+
+        <div data-role="content">
+            <label>UserID:</label>
+            <input type="text" name="name" id="emit_user_info_page_user_id" value="" />
+            <label>User Name:</label>
+            <input type="text" name="name" id="emit_user_info_page_user_name" value="" />
+            <label>Email:</label>
+            <input type="text" name="name" id="emit_user_info_page_email" value="" />
+            <label>First Name:</label>
+            <input type="text" name="name" id="emit_user_info_page_first_name" value="" />
+            <label>Last Name:</label>
+            <input type="text" name="name" id="emit_user_info_page_last_name" value="" />
+            <label>Street Address:</label>
+            <input type="text" name="name" id="emit_user_info_page_street_address" value="" />
+            <label>Phone:</label>
+            <input type="text" name="name" id="emit_user_info_page_phone" value="" />
+            <label>City:</label>
+            <input type="text" name="name" id="emit_user_info_page_city" value="" />
+            <label>State:</label>
+            <input type="text" name="name" id="emit_user_info_page_state" value="" />
+            <label>Zip:</label>
+            <input type="text" name="name" id="emit_user_info_page_zip" value="" />
+            <label>Other Info (in json):</label>
+            <textarea id="emit_user_info_page_other_info"></textarea>
+
+            <a href="javascript:emitUserInfoPressed();" data-role="button">Emit</a>
+
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_login_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Login</h1>
+        </div>
+
+        <div data-role="content">
+            <label>UserID:</label>
+            <input type="text" name="name" id="emit_login_page_user_id" value="" />
+            <label>User Name:</label>
+            <input type="text" name="name" id="emit_login_page_user_name" value="" />
+            <label>Other Info (in json):</label>
+            <textarea id="emit_login_page_other_info"></textarea>
+
+            <a href="javascript:emitLoginPressed();" data-role="button">Emit</a>
+
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_registration_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Registration</h1>
+        </div>
+
+        <div data-role="content">
+            <label>UserID:</label>
+            <input type="text" id="emit_registration_page_user_id" value="" />
+            <label>User Name:</label>
+            <input type="text" id="emit_registration_page_user_name" value="" />
+            <label>Country:</label>
+            <input type="text" id="emit_registration_page_country" value="" />
+            <label>State:</label>
+            <input type="text" id="emit_registration_page_state" value="" />
+            <label>City:</label>
+            <input type="text" id="emit_registration_page_city" value="" />
+            <label>Other Info (in json):</label>
+            <textarea id="emit_registration_page_other_info"></textarea>
+
+            <a href="javascript:emitRegistrationPressed();" data-role="button">Emit</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_fbconnect_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit FBConnect</h1>
+        </div>
+
+        <div data-role="content">
+            <div>
+                <br/>
+                <ul data-role="listview" id="emit_fbconnect_page_social_permissions_list">
+                    <li data-role="list-divider">Social Permissions:</li>
                 </ul>
-            </div>
-        </div>
-        
-        <div data-role="page" id="emit_event_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Event</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>Event Name:</label>
-                <input type="text" name="name" id="emit_event_page_name" value="" />
-                <label>Event Parameters (in json):</label>
-                <textarea id="emit_event_page_parameters"></textarea>
-                
-                <a href="javascript:emitEventPressed();" data-role="button">Emit</a>
+                <br/>
+                <a href="#emit_fbconnect_page_popupAddPermission" data-rel="popup" data-position-to="window" data-role="button">Add Social Permission</a>
+                <div data-role="popup" id="emit_fbconnect_page_popupAddPermission" data-theme="a" class="ui-corner-all">
+                    <form>
+                        <div style="padding:10px 20px;">
+                            <h3>Enter Permission Name:</h3>
+                            <input type="text" id="emit_fbconnect_page_new_permission_name" value="" data-theme="a" />
+                            <h3>Granted:</h3>
+                            <select id="emit_fbconnect_page_new_permission_granted" data-role="slider">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
 
-            </div>
-        </div>
-        
-        <div data-role="page" id="emit_user_info_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit User Info</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>UserID:</label>
-                <input type="text" name="name" id="emit_user_info_page_user_id" value="" />
-                <label>User Name:</label>
-                <input type="text" name="name" id="emit_user_info_page_user_name" value="" />
-                <label>Email:</label>
-                <input type="text" name="name" id="emit_user_info_page_email" value="" />
-                <label>First Name:</label>
-                <input type="text" name="name" id="emit_user_info_page_first_name" value="" />
-                <label>Last Name:</label>
-                <input type="text" name="name" id="emit_user_info_page_last_name" value="" />
-                <label>Street Address:</label>
-                <input type="text" name="name" id="emit_user_info_page_street_address" value="" />
-                <label>Phone:</label>
-                <input type="text" name="name" id="emit_user_info_page_phone" value="" />
-                <label>City:</label>
-                <input type="text" name="name" id="emit_user_info_page_city" value="" />
-                <label>State:</label>
-                <input type="text" name="name" id="emit_user_info_page_state" value="" />
-                <label>Zip:</label>
-                <input type="text" name="name" id="emit_user_info_page_zip" value="" />
-                <label>Other Info (in json):</label>
-                <textarea id="emit_user_info_page_other_info"></textarea>
-
-                <a href="javascript:emitUserInfoPressed();" data-role="button">Emit</a>
-                
-            </div>
-        </div>
-        
-        <div data-role="page" id="emit_login_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Login</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>UserID:</label>
-                <input type="text" name="name" id="emit_login_page_user_id" value="" />
-                <label>User Name:</label>
-                <input type="text" name="name" id="emit_login_page_user_name" value="" />
-                <label>Other Info (in json):</label>
-                <textarea id="emit_login_page_other_info"></textarea>
-                
-                <a href="javascript:emitLoginPressed();" data-role="button">Emit</a>
-                
-            </div>
-        </div>
-        
-        <div data-role="page" id="emit_registration_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Registration</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>UserID:</label>
-                <input type="text" id="emit_registration_page_user_id" value="" />
-                <label>User Name:</label>
-                <input type="text" id="emit_registration_page_user_name" value="" />
-                <label>Country:</label>
-                <input type="text" id="emit_registration_page_country" value="" />
-                <label>State:</label>
-                <input type="text" id="emit_registration_page_state" value="" />
-                <label>City:</label>
-                <input type="text" id="emit_registration_page_city" value="" />
-                <label>Other Info (in json):</label>
-                <textarea id="emit_registration_page_other_info"></textarea>
-                
-                <a href="javascript:emitRegistrationPressed();" data-role="button">Emit</a>
-            </div>
-        </div>
-        
-        <div data-role="page" id="emit_fbconnect_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit FBConnect</h1>
-            </div>
-            
-            <div data-role="content">
-                <div>
-                    <br/>
-                    <ul data-role="listview" id="emit_fbconnect_page_social_permissions_list">
-                        <li data-role="list-divider">Social Permissions:</li>
-                    </ul>
-                    <br/>
-                    <a href="#emit_fbconnect_page_popupAddPermission" data-rel="popup" data-position-to="window" data-role="button">Add Social Permission</a>
-                    <div data-role="popup" id="emit_fbconnect_page_popupAddPermission" data-theme="a" class="ui-corner-all">
-                        <form>
-                            <div style="padding:10px 20px;">
-                                <h3>Enter Permission Name:</h3>
-                                <input type="text" id="emit_fbconnect_page_new_permission_name" value="" data-theme="a" />
-                                <h3>Granted:</h3>
-                                <select id="emit_fbconnect_page_new_permission_granted" data-role="slider">
-                                    <option value="no">No</option>
-                                    <option value="yes">Yes</option>
-                                </select>
-                                
-                                <a data-role="button" href="javascript:fbConnectAddPermissionPressed();" data-theme="b">Add</a>
-                            </div>
-                        </form>
-                    </div>
+                            <a data-role="button" href="javascript:fbConnectAddPermissionPressed();" data-theme="b">Add</a>
+                        </div>
+                    </form>
                 </div>
+            </div>
 
-                <label>Other Info (in json):</label>
-                <textarea id="emit_fbconnect_page_other_info"></textarea>
-                
-                <a href="javascript:emitFBConnectPressed();" data-role="button">Emit</a>
-                
-            </div>
+            <label>Other Info (in json):</label>
+            <textarea id="emit_fbconnect_page_other_info"></textarea>
+
+            <a href="javascript:emitFBConnectPressed();" data-role="button">Emit</a>
+
         </div>
-        
-        <div data-role="page" id="emit_tconnect_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit TConnect</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>UserID:</label>
-                <input type="text" name="name" id="emit_tconnect_page_user_id" value="" />
-                <label>User Name:</label>
-                <input type="text" name="name" id="emit_tconnect_page_user_name" value="" />
-                <div>
-                    <br/>
-                    <ul data-role="listview" id="emit_tconnect_page_social_permissions_list">
-                        <li data-role="list-divider">Social Permissions:</li>
-                    </ul>
-                    <br/>
-                    <a href="#emit_tconnect_page_popupAddPermission" data-rel="popup" data-position-to="window" data-role="button">Add Social Permission</a>
-                    <div data-role="popup" id="emit_tconnect_page_popupAddPermission" data-theme="a" class="ui-corner-all">
-                        <form>
-                            <div style="padding:10px 20px;">
-                                <h3>Enter Permission Name:</h3>
-                                <input type="text" id="emit_tconnect_page_new_permission_name" value="" data-theme="a" />
-                                <h3>Granted:</h3>
-                                <select id="emit_tconnect_page_new_permission_granted" data-role="slider">
-                                    <option value="no">No</option>
-                                    <option value="yes">Yes</option>
-                                </select>
-                                
-                                <a data-role="button" href="javascript:tConnectAddPermissionPressed();" data-theme="b">Add</a>
-                            </div>
-                        </form>
-                    </div>
+    </div>
+
+    <div data-role="page" id="emit_tconnect_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit TConnect</h1>
+        </div>
+
+        <div data-role="content">
+            <label>UserID:</label>
+            <input type="text" name="name" id="emit_tconnect_page_user_id" value="" />
+            <label>User Name:</label>
+            <input type="text" name="name" id="emit_tconnect_page_user_name" value="" />
+            <div>
+                <br/>
+                <ul data-role="listview" id="emit_tconnect_page_social_permissions_list">
+                    <li data-role="list-divider">Social Permissions:</li>
+                </ul>
+                <br/>
+                <a href="#emit_tconnect_page_popupAddPermission" data-rel="popup" data-position-to="window" data-role="button">Add Social Permission</a>
+                <div data-role="popup" id="emit_tconnect_page_popupAddPermission" data-theme="a" class="ui-corner-all">
+                    <form>
+                        <div style="padding:10px 20px;">
+                            <h3>Enter Permission Name:</h3>
+                            <input type="text" id="emit_tconnect_page_new_permission_name" value="" data-theme="a" />
+                            <h3>Granted:</h3>
+                            <select id="emit_tconnect_page_new_permission_granted" data-role="slider">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+
+                            <a data-role="button" href="javascript:tConnectAddPermissionPressed();" data-theme="b">Add</a>
+                        </div>
+                    </form>
                 </div>
-                
-                <label>Other Info (in json):</label>
-                <textarea id="emit_tconnect_page_other_info"></textarea>
-                
-                <a href="javascript:emitTConnectPressed();" data-role="button">Emit</a>
-                
             </div>
+
+            <label>Other Info (in json):</label>
+            <textarea id="emit_tconnect_page_other_info"></textarea>
+
+            <a href="javascript:emitTConnectPressed();" data-role="button">Emit</a>
+
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_upgrade_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Upgrade</h1>
         </div>
 
-        <div data-role="page" id="emit_upgrade_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Upgrade</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>Other Info (in json):</label>
-                <textarea id="emit_upgrade_page_other_info"></textarea>
-                
-                <a href="javascript:emitUpgradePressed();" data-role="button">Emit</a>
-                
-            </div>
+        <div data-role="content">
+            <label>Other Info (in json):</label>
+            <textarea id="emit_upgrade_page_other_info"></textarea>
+
+            <a href="javascript:emitUpgradePressed();" data-role="button">Emit</a>
+
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_trial_upgrade_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Trial Upgrade</h1>
         </div>
 
-        <div data-role="page" id="emit_trial_upgrade_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Trial Upgrade</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>Other Info (in json):</label>
-                <textarea id="emit_trial_upgrade_page_other_info"></textarea>
-                
-                <a href="javascript:emitTrialUpgradePressed();" data-role="button">Emit</a>
-                
-            </div>
+        <div data-role="content">
+            <label>Other Info (in json):</label>
+            <textarea id="emit_trial_upgrade_page_other_info"></textarea>
+
+            <a href="javascript:emitTrialUpgradePressed();" data-role="button">Emit</a>
+
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_transaction_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Transaction</h1>
         </div>
 
-        <div data-role="page" id="emit_transaction_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Transaction</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>Transaction ID:</label>
-                <input type="text" id="emit_transaction_page_transaction_id" value="" />
-                <label>Store ID:</label>
-                <input type="text" id="emit_transaction_page_store_id" value="" />
-                <label>Store Name:</label>
-                <input type="text" id="emit_transaction_page_store_name" value="" />
-                <label>Cart ID:</label>
-                <input type="text" id="emit_transaction_page_cart_id" value="" />
-                <label>Order ID:</label>
-                <input type="text" id="emit_transaction_page_order_id" value="" />
-                <label>Total Sale:</label>
-                <input type="text" id="emit_transaction_page_total_sale" value="" />
+        <div data-role="content">
+            <label>Transaction ID:</label>
+            <input type="text" id="emit_transaction_page_transaction_id" value="" />
+            <label>Store ID:</label>
+            <input type="text" id="emit_transaction_page_store_id" value="" />
+            <label>Store Name:</label>
+            <input type="text" id="emit_transaction_page_store_name" value="" />
+            <label>Cart ID:</label>
+            <input type="text" id="emit_transaction_page_cart_id" value="" />
+            <label>Order ID:</label>
+            <input type="text" id="emit_transaction_page_order_id" value="" />
+            <label>Total Sale:</label>
+            <input type="text" id="emit_transaction_page_total_sale" value="" />
+            <label>Currency:</label>
+            <input type="text" id="emit_transaction_page_currency" value="" />
+            <label>Shipping Costs:</label>
+            <input type="text" id="emit_transaction_page_shipping_costs" value="" />
+            <label>Transaction Tax:</label>
+            <input type="text" id="emit_transaction_page_transaction_tax" value="" />
+            <label>Other Info (in json):</label>
+            <textarea id="emit_transaction_page_other_info"></textarea>
+
+            <a href="javascript:emitTransactionPressed();" data-role="button">Emit</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_transaction_item_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Transaction Item</h1>
+        </div>
+
+        <div data-role="content">
+            <label>Transaction ID:</label>
+            <input type="text" id="emit_transaction_item_page_transaction_id" value="" />
+
+            <div>
+                <h3>Line Item:</h3>
+                <label>Product ID:</label>
+                <input type="text" id="emit_transaction_item_page_line_item_product_id" value="" />
+                <label>Product Name:</label>
+                <input type="text" id="emit_transaction_item_page_line_item_product_name" value="" />
+                <label>Quantity:</label>
+                <input type="text" id="emit_transaction_item_page_line_item_quantity" value="" />
+                <label>Unit Of Measure:</label>
+                <input type="text" id="emit_transaction_item_page_line_item_unit_of_measure" value="" />
+                <label>Msr Price:</label>
+                <input type="text" id="emit_transaction_item_page_line_item_msr_price" value="" />
+                <label>Price Paid:</label>
+                <input type="text" id="emit_transaction_item_page_line_item_price_paid" value="" />
                 <label>Currency:</label>
-                <input type="text" id="emit_transaction_page_currency" value="" />
-                <label>Shipping Costs:</label>
-                <input type="text" id="emit_transaction_page_shipping_costs" value="" />
-                <label>Transaction Tax:</label>
-                <input type="text" id="emit_transaction_page_transaction_tax" value="" />
-                <label>Other Info (in json):</label>
-                <textarea id="emit_transaction_page_other_info"></textarea>
-                
-                <a href="javascript:emitTransactionPressed();" data-role="button">Emit</a>
+                <input type="text" id="emit_transaction_item_page_line_item_currency" value="" />
+                <label>Item Category:</label>
+                <input type="text" id="emit_transaction_item_page_line_item_category" value="" />
             </div>
+
+            <label>Other Info (in json):</label>
+            <textarea id="emit_transaction_item_page_other_info"></textarea>
+
+            <a href="javascript:emitTransactionItemPressed();" data-role="button">Emit</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_cart_create_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Cart Create</h1>
         </div>
 
-        <div data-role="page" id="emit_transaction_item_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Transaction Item</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>Transaction ID:</label>
-                <input type="text" id="emit_transaction_item_page_transaction_id" value="" />
+        <div data-role="content">
+            <label>Cart ID:</label>
+            <input type="text" id="emit_cart_create_page_cart_id" value="" />
+            <label>Other Info (in json):</label>
+            <textarea id="emit_cart_create_page_other_info"></textarea>
 
-                <div>
-                    <h3>Line Item:</h3>
-                    <label>Product ID:</label>
-                    <input type="text" id="emit_transaction_item_page_line_item_product_id" value="" />
-                    <label>Product Name:</label>
-                    <input type="text" id="emit_transaction_item_page_line_item_product_name" value="" />
-                    <label>Quantity:</label>
-                    <input type="text" id="emit_transaction_item_page_line_item_quantity" value="" />
-                    <label>Unit Of Measure:</label>
-                    <input type="text" id="emit_transaction_item_page_line_item_unit_of_measure" value="" />
-                    <label>Msr Price:</label>
-                    <input type="text" id="emit_transaction_item_page_line_item_msr_price" value="" />
-                    <label>Price Paid:</label>
-                    <input type="text" id="emit_transaction_item_page_line_item_price_paid" value="" />
-                    <label>Currency:</label>
-                    <input type="text" id="emit_transaction_item_page_line_item_currency" value="" />
-                    <label>Item Category:</label>
-                    <input type="text" id="emit_transaction_item_page_line_item_category" value="" />
-                </div>
+            <a href="javascript:emitCartCreatePressed();" data-role="button">Emit</a>
 
-                <label>Other Info (in json):</label>
-                <textarea id="emit_transaction_item_page_other_info"></textarea>
-                
-                <a href="javascript:emitTransactionItemPressed();" data-role="button">Emit</a>
-            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_cart_delete_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Cart Delete</h1>
         </div>
 
-        <div data-role="page" id="emit_cart_create_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Cart Create</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>Cart ID:</label>
-                <input type="text" id="emit_cart_create_page_cart_id" value="" />
-                <label>Other Info (in json):</label>
-                <textarea id="emit_cart_create_page_other_info"></textarea>
+        <div data-role="content">
+            <label>Cart ID:</label>
+            <input type="text" id="emit_cart_delete_page_cart_id" value="" />
+            <label>Other Info (in json):</label>
+            <textarea id="emit_cart_delete_page_other_info"></textarea>
 
-                <a href="javascript:emitCartCreatePressed();" data-role="button">Emit</a>
-                
-            </div>
+            <a href="javascript:emitCartDeletePressed();" data-role="button">Emit</a>
+
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_add_to_cart_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Add To Cart</h1>
         </div>
 
-        <div data-role="page" id="emit_cart_delete_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Cart Delete</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>Cart ID:</label>
-                <input type="text" id="emit_cart_delete_page_cart_id" value="" />
-                <label>Other Info (in json):</label>
-                <textarea id="emit_cart_delete_page_other_info"></textarea>
+        <div data-role="content">
+            <label>Cart ID:</label>
+            <input type="text" id="emit_add_to_cart_page_cart_id" value="" />
 
-                <a href="javascript:emitCartDeletePressed();" data-role="button">Emit</a>
-                
+            <div>
+                <h3>Line Item:</h3>
+                <label>Product ID:</label>
+                <input type="text" id="emit_add_to_cart_page_line_item_product_id" value="" />
+                <label>Product Name:</label>
+                <input type="text" id="emit_add_to_cart_page_line_item_product_name" value="" />
+                <label>Quantity:</label>
+                <input type="text" id="emit_add_to_cart_page_line_item_quantity" value="" />
+                <label>Unit Of Measure:</label>
+                <input type="text" id="emit_add_to_cart_page_line_item_unit_of_measure" value="" />
+                <label>Msr Price:</label>
+                <input type="text" id="emit_add_to_cart_page_line_item_msr_price" value="" />
+                <label>Price Paid:</label>
+                <input type="text" id="emit_add_to_cart_page_line_item_price_paid" value="" />
+                <label>Currency:</label>
+                <input type="text" id="emit_add_to_cart_page_line_item_currency" value="" />
+                <label>Item Category:</label>
+                <input type="text" id="emit_add_to_cart_page_line_item_category" value="" />
             </div>
+
+            <label>Other Info (in json):</label>
+            <textarea id="emit_add_to_cart_page_other_info"></textarea>
+
+            <a href="javascript:emitAddToCartPressed();" data-role="button">Emit</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_delete_from_cart_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Delete From Cart</h1>
         </div>
 
-        <div data-role="page" id="emit_add_to_cart_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Add To Cart</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>Cart ID:</label>
-                <input type="text" id="emit_add_to_cart_page_cart_id" value="" />
+        <div data-role="content">
+            <label>Cart ID:</label>
+            <input type="text" id="emit_delete_from_cart_page_cart_id" value="" />
 
-                <div>
-                    <h3>Line Item:</h3>
-                    <label>Product ID:</label>
-                    <input type="text" id="emit_add_to_cart_page_line_item_product_id" value="" />
-                    <label>Product Name:</label>
-                    <input type="text" id="emit_add_to_cart_page_line_item_product_name" value="" />
-                    <label>Quantity:</label>
-                    <input type="text" id="emit_add_to_cart_page_line_item_quantity" value="" />
-                    <label>Unit Of Measure:</label>
-                    <input type="text" id="emit_add_to_cart_page_line_item_unit_of_measure" value="" />
-                    <label>Msr Price:</label>
-                    <input type="text" id="emit_add_to_cart_page_line_item_msr_price" value="" />
-                    <label>Price Paid:</label>
-                    <input type="text" id="emit_add_to_cart_page_line_item_price_paid" value="" />
-                    <label>Currency:</label>
-                    <input type="text" id="emit_add_to_cart_page_line_item_currency" value="" />
-                    <label>Item Category:</label>
-                    <input type="text" id="emit_add_to_cart_page_line_item_category" value="" />
-                </div>
-
-                <label>Other Info (in json):</label>
-                <textarea id="emit_add_to_cart_page_other_info"></textarea>
-                
-                <a href="javascript:emitAddToCartPressed();" data-role="button">Emit</a>
+            <div>
+                <h3>Line Item:</h3>
+                <label>Product ID:</label>
+                <input type="text" id="emit_delete_from_cart_page_line_item_product_id" value="" />
+                <label>Product Name:</label>
+                <input type="text" id="emit_delete_from_cart_page_line_item_product_name" value="" />
+                <label>Quantity:</label>
+                <input type="text" id="emit_delete_from_cart_page_line_item_quantity" value="" />
+                <label>Unit Of Measure:</label>
+                <input type="text" id="emit_delete_from_cart_page_line_item_unit_of_measure" value="" />
+                <label>Msr Price:</label>
+                <input type="text" id="emit_delete_from_cart_page_line_item_msr_price" value="" />
+                <label>Price Paid:</label>
+                <input type="text" id="emit_delete_from_cart_page_line_item_price_paid" value="" />
+                <label>Currency:</label>
+                <input type="text" id="emit_delete_from_cart_page_line_item_currency" value="" />
+                <label>Item Category:</label>
+                <input type="text" id="emit_delete_from_cart_page_line_item_category" value="" />
             </div>
+
+            <label>Other Info (in json):</label>
+            <textarea id="emit_delete_from_cart_page_other_info"></textarea>
+
+            <a href="javascript:emitDeleteFromCartPressed();" data-role="button">Emit</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="emit_screen_view_page" data-add-back-btn="true">
+        <div data-role="header" data-add-back-btn="true">
+            <h1>Emit Screen View</h1>
         </div>
 
-        <div data-role="page" id="emit_delete_from_cart_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Delete From Cart</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>Cart ID:</label>
-                <input type="text" id="emit_delete_from_cart_page_cart_id" value="" />
+        <div data-role="content">
+            <label>Document Title:</label>
+            <input type="text" id="emit_screen_view_page_document_title" value="" />
+            <label>Content Description:</label>
+            <input type="text" id="emit_screen_view_page_content_description" value="" />
+            <label>Document Location Url:</label>
+            <input type="text" id="emit_screen_view_page_document_location_url" value="" />
+            <label>Document Host Name:</label>
+            <input type="text" id="emit_screen_view_page_document_host_name" value="" />
+            <label>Document Path:</label>
+            <input type="text" id="emit_screen_view_page_document_path" value="" />
+            <label>Other Info (in json):</label>
+            <textarea id="emit_screen_view_page_other_info"></textarea>
 
-                <div>
-                    <h3>Line Item:</h3>
-                    <label>Product ID:</label>
-                    <input type="text" id="emit_delete_from_cart_page_line_item_product_id" value="" />
-                    <label>Product Name:</label>
-                    <input type="text" id="emit_delete_from_cart_page_line_item_product_name" value="" />
-                    <label>Quantity:</label>
-                    <input type="text" id="emit_delete_from_cart_page_line_item_quantity" value="" />
-                    <label>Unit Of Measure:</label>
-                    <input type="text" id="emit_delete_from_cart_page_line_item_unit_of_measure" value="" />
-                    <label>Msr Price:</label>
-                    <input type="text" id="emit_delete_from_cart_page_line_item_msr_price" value="" />
-                    <label>Price Paid:</label>
-                    <input type="text" id="emit_delete_from_cart_page_line_item_price_paid" value="" />
-                    <label>Currency:</label>
-                    <input type="text" id="emit_delete_from_cart_page_line_item_currency" value="" />
-                    <label>Item Category:</label>
-                    <input type="text" id="emit_delete_from_cart_page_line_item_category" value="" />
-                </div>
-
-                <label>Other Info (in json):</label>
-                <textarea id="emit_delete_from_cart_page_other_info"></textarea>
-                
-                <a href="javascript:emitDeleteFromCartPressed();" data-role="button">Emit</a>
-            </div>
+            <a href="javascript:emitScreenViewPressed();" data-role="button">Emit</a>
         </div>
+    </div>
 
-        <div data-role="page" id="emit_screen_view_page" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Emit Screen View</h1>
-            </div>
-            
-            <div data-role="content">
-                <label>Document Title:</label>
-                <input type="text" id="emit_screen_view_page_document_title" value="" />
-                <label>Content Description:</label>
-                <input type="text" id="emit_screen_view_page_content_description" value="" />
-                <label>Document Location Url:</label>
-                <input type="text" id="emit_screen_view_page_document_location_url" value="" />
-                <label>Document Host Name:</label>
-                <input type="text" id="emit_screen_view_page_document_host_name" value="" />
-                <label>Document Path:</label>
-                <input type="text" id="emit_screen_view_page_document_path" value="" />
-                <label>Other Info (in json):</label>
-                <textarea id="emit_screen_view_page_other_info"></textarea>
-                
-                <a href="javascript:emitScreenViewPressed();" data-role="button">Emit</a>
-            </div>
-        </div>
-        
-    </body>
+</body>
+
 </html>

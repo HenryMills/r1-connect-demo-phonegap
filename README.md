@@ -50,6 +50,10 @@ If you have set up Google Play Services add this line
 	<meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+           
+If you want to disable sending all advertising ids to the server add this line
+
+    <preference name="com.radiumone.r1connect.disableAllAdvertisingIds" value="true" />
 		
 
 #### iOS manual installation (unnecessary if installed automatically)
@@ -66,6 +70,7 @@ If you have set up Google Play Services add this line
         CoreLocation.framework
         SystemConfiguration.framework
         Security.framework
+        CoreBluetooth.framework
 
 1. Modify the cordova config.xml file to include the R1ConnectPlugin and preferences:
 
@@ -122,6 +127,12 @@ If you have set up Google Play Services add this line
                 <action android:name="com.radiumone.r1push.OPENED_INTERNAL" />
             </intent-filter>
         </receiver>
+        <receiver android:exported="false" android:name="com.radiumone.cordova.plugin.CordovaPushReceiver">
+            <intent-filter>
+                <action android:name="com.radiumone.r1push.OPENED" />
+            </intent-filter>
+        </receiver>
+
         <service android:name="com.radiumone.emitter.push.R1ConnectService" />
         <service android:name="com.radiumone.emitter.location.LocationService" />
         
@@ -192,23 +203,6 @@ Indicates whether the SDK is started. The SDK started automatically if you sette
 		//...
     });
     
-#### setAdvertisingEnabled
-
-Indicates (to the SDK) whether or not the application is displaying advertisiments. A value of true prevents the SDK from accessing IDFA to comply with Apple's advertising policy when advertisements are served within the application (outside of the SDK).
-
-	R1SDK.setAdvertisingEnabled(true);
-
-#### isAdvertisingEnabled
-
-*Callback arguments:* (bool isAdvertisingEnabled)
-
-Indicates (to the SDK) whether or not the application is displaying advertisiments. A value of true prevents the SDK from accessing IDFA to comply with Apple's advertising policy when advertisements are served within the application (outside of the SDK).
-
-	R1SDK.isAdvertisingEnabled(function (isAdvertisingEnabled) {
-		//...
-    });
-
-
 #### setApplicationUserId
 
 Set optional current user identifier.
@@ -224,6 +218,39 @@ Get last setted application user identifier.
 	R1SDK.getApplicationUserId(function (applicationUserId) {
 		//...
     });
+    
+#### setGeofencingEnabled
+
+Enable or disable the Geofencing service in the SDK.
+
+	R1SDK.setGeofencingEnabled(true);
+
+#### isGeofencingEnabled
+
+*Callback arguments:* (bool isGeofencingEnabled)
+
+Indicates whether Geofencing service is enabled.
+
+	R1SDK.isGeofencingEnabled(function (isGeofencingEnabled) {
+		//...
+    });
+    
+#### setEngageEnabled
+
+Enable or disable the Engage in the SDK.
+
+	R1SDK.setEngageEnabled(true);
+
+#### isEngageEnabled
+
+*Callback arguments:* (bool isEngageEnabled)
+
+Indicates whether Engage is enabled.
+
+	R1SDK.isEngageEnabled(function (isEngageEnabled) {
+		//...
+    });
+
 
 ### R1LocationService
 

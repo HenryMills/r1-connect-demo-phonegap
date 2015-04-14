@@ -20,4 +20,6 @@
     <preference name="com.radiumone.r1connect.MPNSServiceName" value="[YOUR SERVICE NAME]" />
     <preference name="com.radiumone.r1connect.MPNSChannelName" value="[YOUR PUSH CHANNEL]" />
     <preference name="com.radiumone.r1connect.TileAllowedDomains" value="[TILE DOMAIN 1], [TILE DOMAIN 2]" />
+
+    <preference name="com.radiumone.r1connect.disableAllAdvertisingIds" value="false" />
 </widget>

@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "R1WebCommand.h"
 #import "R1PushTags.h"
 #import "R1LocationService.h"
 
@@ -39,9 +40,11 @@
 @optional
 
 - (void) handleForegroundNotification:(NSDictionary *)notification;
-
 - (void) handleBackgroundNotification:(NSDictionary *)notification;
 
+- (void) handleForegroundRichPushNotification:(NSDictionary *)notification;
+- (void) handleBackgroundRichPushNotification:(NSDictionary *)notification;
+
+- (void) handleWebCommand:(R1WebCommand *) webCommand;
 
 @end
-

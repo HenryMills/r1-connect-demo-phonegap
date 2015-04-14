@@ -14,7 +14,7 @@
     	<engine name="cordova" version=">=3.0.0" />
     </engines>
 
-    <dependency id="org.apache.cordova.device" url="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" commit="master" subdir="." />
+    <dependency id="cordova-plugin-device" url="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" commit="master" subdir="." />
 
     <js-module src="www/R1Connect.js" name="R1Connect">
          <clobbers target="R1Connect" />
@@ -61,12 +61,19 @@
                 </intent-filter>
             </receiver>
 
+            <receiver android:exported="false" android:name="com.radiumone.cordova.plugin.CordovaPushReceiver">
+                <intent-filter>
+                    <action android:name="com.radiumone.r1push.OPENED" />
+                </intent-filter>
+            </receiver>
+
             <service android:name="com.radiumone.emitter.push.R1ConnectService"/>
             <service android:name="com.radiumone.emitter.location.LocationService"/>
 
         </config-file>
 
         <source-file src="src/android/R1ConnectPlugin.java" target-dir="src/com/radiumone/cordova/plugin" />
+        <source-file src="src/android/CordovaPushReceiver.java" target-dir="src/com/radiumone/cordova/plugin" />
         <source-file src="src/android/LibR1Connect.jar" target-dir="libs/" />
         <source-file src="src/android/android-support-v4.jar" target-dir="libs/" />
         <source-file src="src/android/r1connect.properties" target-dir="assets/" />
@@ -108,6 +115,8 @@
         <header-file src="src/ios/Lib/R1Push.h"  />
         <header-file src="src/ios/Lib/R1PushTags.h"  />
         <header-file src="src/ios/Lib/R1LocationService.h"  />
+        <header-file src="src/ios/Lib/R1GeofencingSDK.h"  />
+        <header-file src="src/ios/Lib/R1WebCommand.h"  />
 
         <source-file src="src/ios/Lib/LibR1Connect.a" framework="true"/>
 
@@ -121,6 +130,7 @@
         <framework src="CoreLocation.framework" />
         <framework src="SystemConfiguration.framework" />
         <framework src="Security.framework" />
+        <framework src="CoreBluetooth.framework" />        
     </platform>
 
     <!-- wp8 -->

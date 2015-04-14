@@ -11,6 +11,7 @@
 
 #define APP_ID_SETTINGS_KEY @"com.radiumone.r1connect.applicationid"
 #define CLIENT_KEY_SETTINGS_KEY @"com.radiumone.r1connect.clientkey"
+#define DISABLE_ALL_ADV_IDS_SETTINGS_KEY @"com.radiumone.r1connect.disablealladvertisingids"
 
 @implementation R1ConnectPlugin
 
@@ -28,6 +29,9 @@
     
     sdk.applicationId = applicationId;
     sdk.clientKey = clientKey;
+    
+    NSString *disableAllAdvertisingIds = [[settings valueForKey:DISABLE_ALL_ADV_IDS_SETTINGS_KEY] lowercaseString];
+    sdk.disableAllAdvertisingIds = [disableAllAdvertisingIds isEqualToString:@"true"] || [disableAllAdvertisingIds isEqualToString:@"YES"];
     
     sdk.push.delegate = (id)self;
 
@@ -111,7 +115,7 @@
     }];
 }
 
-- (void) setAdvertisingEnabled:(CDVInvokedUrlCommand *)command
+- (void) setGeofencingEnabled:(CDVInvokedUrlCommand *)command
 {
     if ([command.arguments count] != 1)
     {
@@ -120,16 +124,38 @@
     }
 
     [self dispatch:^{
-        [R1SDK sharedInstance].advertisingEnabled = [self getBoolFromCommand:command parameterIndex:0];
+        [R1SDK sharedInstance].geofencingEnabled = [self getBoolFromCommand:command parameterIndex:0];
 
         [self sendOkResultToCommand:command];
     }];
 }
 
-- (void) isAdvertisingEnabled:(CDVInvokedUrlCommand *)command
+- (void) isGeofencingEnabled:(CDVInvokedUrlCommand *)command
 {
     [self dispatch:^{
-        [self sendOkResultToCommand:command withBool:[R1SDK sharedInstance].advertisingEnabled];
+        [self sendOkResultToCommand:command withBool:[R1SDK sharedInstance].geofencingEnabled];
+    }];
+}
+
+- (void) setEngageEnabled:(CDVInvokedUrlCommand *)command
+{
+    if ([command.arguments count] != 1)
+    {
+        [self sendWrongParametersCountToCommand:command];
+        return;
+    }
+
+    [self dispatch:^{
+        [R1SDK sharedInstance].engageEnabled = [self getBoolFromCommand:command parameterIndex:0];
+
+        [self sendOkResultToCommand:command];
+    }];
+}
+
+- (void) isEngageEnabled:(CDVInvokedUrlCommand *)command
+{
+    [self dispatch:^{
+        [self sendOkResultToCommand:command withBool:[R1SDK sharedInstance].engageEnabled];
     }];
 }
 

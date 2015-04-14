@@ -2,7 +2,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
     R1SDK.isStarted(function(started) {
-		$("#main_loading").hide();
+        $("#main_loading").hide();
 
         if (started) {
             $("#main_error").hide();
@@ -24,6 +24,7 @@ function onDeviceReady() {
             });
 
             configureSharedOptions();
+            configureOtherOptions();
         } else {
             $("#main_error").show();
             $("#main_normal").hide();
@@ -32,16 +33,6 @@ function onDeviceReady() {
 }
 
 function configureSharedOptions() {
-    R1SDK.isAdvertisingEnabled(function(advertisingEnabled) {
-        var isAdvertisingEnabledField = $('#shared_options_page_advertising_enabled');
-
-        isAdvertisingEnabledField.val(advertisingEnabled ? 'on' : 'off').change()
-
-        isAdvertisingEnabledField.change(function() {
-            R1SDK.setAdvertisingEnabled((isAdvertisingEnabledField.val() == "on"));
-        });
-    });
-
     R1SDK.getApplicationUserId(function(applicationUserId) {
         var appUserIdInput = $('#shared_options_page_app_user_id');
 
@@ -158,6 +149,28 @@ function configureEmitterOptions() {
 
 }
 
+function configureOtherOptions() {
+    R1SDK.isGeofencingEnabled(function(isGeofencingEnabled) {
+        var isGeofencingEnabledField = $('#other_options_page_geofencing_enabled');
+
+        isGeofencingEnabledField.val(isGeofencingEnabled ? 'on' : 'off').change()
+
+        isGeofencingEnabledField.change(function() {
+            R1SDK.setGeofencingEnabled((isGeofencingEnabledField.val() == "on"));
+        });
+    });
+
+    R1SDK.isEngageEnabled(function(isEngageEnabled) {
+        var isEngageEnabledField = $('#other_options_page_engage_enabled');
+
+        isEngageEnabledField.val(isEngageEnabled ? 'on' : 'off').change()
+
+        isEngageEnabledField.change(function() {
+            R1SDK.setEngageEnabled((isEngageEnabledField.val() == "on"));
+        });
+    });
+}
+
 function configurePushOptions() {
     R1Push.isEnabled(function(isPushEnabled) {
         var isPushEnabledField = $('#push_options_page_push_enabled');
@@ -194,21 +207,17 @@ function configurePushOptions() {
     });
 
     document.addEventListener("R1Push.foregroundNotification", function(event) {
-                              pushNotificationReceived("Foreground Notification", event);
+        pushNotificationReceived("Foreground Notification", event);
     }, false);
     document.addEventListener("R1Push.backgroundNotification", function(event) {
-                              pushNotificationReceived("Background Notification", event);
+        pushNotificationReceived("Background Notification", event);
     }, false);
 }
 
-function pushNotificationReceived(type, notification)
-{
-    try
-    {
-        alert(type+"\n"+event.aps.alert);
-    }
-    catch (err)
-    {
+function pushNotificationReceived(type, notification) {
+    try {
+        alert(type + "\n" + event.aps.alert);
+    } catch (err) {
         alert(JSON.stringify(err));
     }
 }
@@ -307,9 +316,18 @@ function emitUserInfoPressed() {
     var state = $("#emit_user_info_page_state").val();
     var zip = $("#emit_user_info_page_zip").val();
 
-    var userInfo = {"userID":userID, "userName":userName, "email":email,
-                    "firstName":firstName, "lastName":lastName, "streetAddress":streetAddress,
-                    "phone":phone, "city":city, "state":state, "zip":zip};
+    var userInfo = {
+        "userID": userID,
+        "userName": userName,
+        "email": email,
+        "firstName": firstName,
+        "lastName": lastName,
+        "streetAddress": streetAddress,
+        "phone": phone,
+        "city": city,
+        "state": state,
+        "zip": zip
+    };
 
     var otherInfo = objectFromField($("#emit_user_info_page_other_info"));
 
