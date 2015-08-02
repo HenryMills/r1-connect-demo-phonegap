@@ -1,23 +1,5 @@
 package com.radiumone.cordova.plugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.PluginResult;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +17,24 @@ import com.radiumone.emitter.push.R1Push;
 import com.radiumone.emitter.push.R1PushConfig;
 import com.radiumone.emitter.push.R1PushPreferences;
 import com.radiumone.geofence_sdk.R1GeofenceSDKManager;
+
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class R1ConnectPlugin extends CordovaPlugin implements
         R1Push.OnOpenListener {
@@ -1267,15 +1267,21 @@ public class R1ConnectPlugin extends CordovaPlugin implements
                         }
                     }
 
-                    private void evalJs(String js) {
+                    private void evalJs(final String js) {
+
                         if (webView != null) {
-                            if (Build.VERSION.SDK_INT > 18) {
-                                webView.evaluateJavascript(js, null);
-                            } else {
-                                webView.loadUrl("javascript:" + js);
-                            }
+                            webView.getView().post(new Runnable(){
+                                public void run(){
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                        webView.sendJavascript(js);
+                                    } else {
+                                        webView.loadUrl("javascript:" + js);
+                                    }
+                                }
+                            });
                         }
                     }
+
                 });
             }
         }

@@ -6,7 +6,7 @@ This plugin supports PhoneGap/Cordova apps running on iOS, Android and Windows P
 
 ### Version Requirements
 
-This plugin is meant to work with PhoneGap 3.0.0+ 
+This plugin is meant to work with PhoneGap 5.0.0+ 
 
 ## Installation
 
@@ -22,7 +22,7 @@ If you do not want to use Push on android you can skip Google Play Services setu
 #### Automatic Installation using PhoneGap/Cordova CLI (iOS, Android and WP8)
 1. Install this plugin using PhoneGap/Cordova cli:
 
-		cordova plugin add https://github.com/radiumone/r1-connect-demo-phonegap
+		cordova plugin add https://github.com/radiumone/r1-connect-demo-phonegap#cordova5
 
 
 2. Modify the www/config.xml ( res/xml/config.xml for android ) directory to contain (replacing with your configuration settings) :
