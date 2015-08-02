@@ -6,7 +6,7 @@ This plugin supports PhoneGap/Cordova apps running on iOS, Android and Windows P
 
 ### Version Requirements
 
-This plugin is meant to work with PhoneGap 3.0.0+ 
+This plugin is meant to work with PhoneGap 3.x - 4.x. For PhoneGap 5.x+ use branch [cordova5](https://github.com/radiumone/r1-connect-demo-phonegap/tree/cordova5)
 
 ## Installation
 
