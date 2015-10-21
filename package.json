@@ -1,0 +1,35 @@
+{
+  "name": "R1Connect",
+  "version": "2.1.0",
+  "description": "R1Connect Plugin for PhoneGap/Cordova",
+  "cordova": {
+    "id": "com.radiumone.R1Connect.phonegap",
+    "platforms": [
+      "android",
+      "ios",
+      "wp8"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/radiumone/r1-connect-demo-phonegap.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-wp8"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "Radiumone",
+  "license": "R1 API License Agreement",
+  "bugs": {
+    "url": "https://github.com/radiumone/r1-connect-demo-phonegap/issues"
+  },
+  "homepage": "https://github.com/radiumone/r1-connect-demo-phonegap#readme"
+}
