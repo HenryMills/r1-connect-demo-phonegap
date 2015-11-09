@@ -1,6 +1,6 @@
 {
   "name": "r1connect",
-  "version": "2.1.0",
+  "version": "3.0.1",
   "description": "R1Connect Plugin for PhoneGap/Cordova",
   "cordova": {
     "id": "com.radiumone.R1Connect.phonegap",

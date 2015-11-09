@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.radiumone.R1Connect.phonegap"
-    version="2.1.0">
+    version="3.0.1">
 
     <name>R1Connect Plugin</name>
     
@@ -112,11 +112,15 @@
         <header-file src="src/ios/Lib/R1EmitterLineItem.h"  />
         <header-file src="src/ios/Lib/R1EmitterUserInfo.h"  />
         <header-file src="src/ios/Lib/R1EmitterSocialPermission.h"  />
+        <header-file src="src/ios/Lib/R1Inbox.h"  />
+        <header-file src="src/ios/Lib/R1InboxMessage.h"  />
+        <header-file src="src/ios/Lib/R1InboxMessages.h"  />
         <header-file src="src/ios/Lib/R1Push.h"  />
         <header-file src="src/ios/Lib/R1PushTags.h"  />
         <header-file src="src/ios/Lib/R1LocationService.h"  />
         <header-file src="src/ios/Lib/R1GeofencingSDK.h"  />
         <header-file src="src/ios/Lib/R1WebCommand.h"  />
+        <header-file src="src/ios/Lib/R1WebViewHelper.h"  />
 
         <source-file src="src/ios/Lib/LibR1Connect.a" framework="true"/>
 

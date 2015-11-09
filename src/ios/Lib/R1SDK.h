@@ -14,6 +14,8 @@
 @property(nonatomic, assign) BOOL geofencingEnabled;
 @property(nonatomic, assign) BOOL engageEnabled;
 
+@property(nonatomic, assign) BOOL cookieMapping;
+
 /*!
  The current user location.
  Use this variable only if your application already used location services.
