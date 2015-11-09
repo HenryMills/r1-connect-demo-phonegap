@@ -1,5 +1,5 @@
 {
-  "name": "R1Connect",
+  "name": "r1connect",
   "version": "2.1.0",
   "description": "R1Connect Plugin for PhoneGap/Cordova",
   "cordova": {
