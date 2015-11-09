@@ -14,7 +14,7 @@
 
 @property (nonatomic, copy, readonly) NSString *deviceToken;
 
-@property (nonatomic, readonly) R1PushTags *tags;
+@property (nonatomic, strong, readonly) R1PushTags *tags;
 
 @property (nonatomic, retain) NSTimeZone *timeZone;
 
@@ -41,10 +41,5 @@
 
 - (void) handleForegroundNotification:(NSDictionary *)notification;
 - (void) handleBackgroundNotification:(NSDictionary *)notification;
-
-- (void) handleForegroundRichPushNotification:(NSDictionary *)notification;
-- (void) handleBackgroundRichPushNotification:(NSDictionary *)notification;
-
-- (void) handleWebCommand:(R1WebCommand *) webCommand;
 
 @end
