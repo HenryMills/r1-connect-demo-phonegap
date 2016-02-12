@@ -12,7 +12,7 @@ This plugin is meant to work with PhoneGap 3.x - 4.x. For PhoneGap 5.x+ use bran
 
 #### Overview
 
-This integration doc assumes you have already set up Google Play Services in your application project for android, which is needed to use Google Cloud Messaging (GCM), the notification gateway R1 Connect utilizes. Also you will need to have created the app you will be using in R1 Connect.
+This integration doc assumes you have already set up Google Play Services in your application project for android (min version 7.5), which is needed to use Google Cloud Messaging (GCM), the notification gateway R1 Connect utilizes. Also you will need to have created the app you will be using in R1 Connect.
 
 In order to use R1 Connect with your application you will need a project number (sender ID) and API key from Google. Please visit “GCM Getting Started” [here](http://developer.android.com/intl/ru/google/gcm/gs.html) and create a google project and an API key.
 
@@ -113,15 +113,35 @@ If you want to disable sending all advertising ids to the server add this line
 
 1. Modify the AndroidManifest.xml Application section to include:
 
-
-        <receiver android:exported="true" android:name="com.radiumone.emitter.gcm.R1GCMPushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                
-                <!-- Please, replace $PACKAGE_NAME with your apps package name-->
+        
+        <receiver android:name="com.google.android.gms.gcm.GcmReceiver"
+		android:exported="true"
+		android:permission="com.google.android.c2dm.permission.SEND">
+		<intent-filter>
+			<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+			<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+			<!-- Please, replace $PACKAGE_NAME with your apps package name-->
                 <category android:name="$PACKAGE_NAME" />
-            </intent-filter>
-        </receiver>
+		</intent-filter>
+	</receiver>
+	<service
+		android:name="com.radiumone.emitter.gcm.RegistrationIntentService"
+		android:exported="false" />
+	<service
+		android:name="com.radiumone.emitter.gcm.R1ConnectGCMListenerService"
+		android:exported="false">
+		<intent-filter>
+			<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+		</intent-filter>
+	</service>
+	<service
+		android:name="com.radiumone.emitter.gcm.R1ConnectInstanceIDListenerService"
+		android:exported="false">
+		<intent-filter>
+			<action android:name="com.google.android.gms.iid.InstanceID" />
+		</intent-filter>
+ 	</service>
+
         <receiver android:exported="false" android:name="com.radiumone.emitter.push.R1PushBroadcastReceiver">
             <intent-filter>
                 <action android:name="com.radiumone.r1push.OPENED_INTERNAL" />
