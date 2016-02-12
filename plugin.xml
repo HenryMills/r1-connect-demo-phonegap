@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.radiumone.R1Connect.phonegap"
-    version="3.0.2">
+    version="3.2.0">
 
     <name>R1Connect Plugin</name>
     
@@ -46,13 +46,36 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-            <receiver android:name="com.radiumone.emitter.gcm.R1GCMPushReceiver" android:exported="true"
-                  android:permission="com.google.android.c2dm.permission.SEND" >
+             <receiver
+                android:name="com.google.android.gms.gcm.GcmReceiver"
+                android:exported="true"
+                android:permission="com.google.android.c2dm.permission.SEND">
                 <intent-filter>
                     <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
                     <category android:name="$PACKAGE_NAME" />
                 </intent-filter>
             </receiver>
+
+            <service
+                android:name="com.radiumone.emitter.gcm.RegistrationIntentService"
+                android:exported="false" />
+            <service
+                android:name="com.radiumone.emitter.gcm.R1ConnectGCMListenerService"
+                android:exported="false">
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                </intent-filter>
+            </service>
+            <service
+                android:name="com.radiumone.emitter.gcm.R1ConnectInstanceIDListenerService"
+                android:exported="false">
+                <intent-filter>
+                    <action android:name="com.google.android.gms.iid.InstanceID" />
+                </intent-filter>
+            </service>
+
 
             <receiver android:name="com.radiumone.emitter.push.R1PushBroadcastReceiver"
                   android:exported="false">
@@ -75,7 +98,7 @@
         <source-file src="src/android/R1ConnectPlugin.java" target-dir="src/com/radiumone/cordova/plugin" />
         <source-file src="src/android/CordovaPushReceiver.java" target-dir="src/com/radiumone/cordova/plugin" />
         <source-file src="src/android/LibR1Connect.jar" target-dir="libs/" />
-        <source-file src="src/android/android-support-v4.jar" target-dir="libs/" />
+        <source-file src="src/android/android-support-v4-library.jar" target-dir="libs/" />
         <source-file src="src/android/r1connect.properties" target-dir="assets/" />
 
     </platform>

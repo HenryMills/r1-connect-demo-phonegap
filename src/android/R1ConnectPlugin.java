@@ -80,10 +80,10 @@ public class R1ConnectPlugin extends CordovaPlugin implements
 
         if (!TextUtils.isEmpty(senderId)) {
             R1PushConfig.getInstance(applicationContext).setSenderId(senderId,
-                    true);
+                    false);
         }
         R1PushConfig.getInstance(applicationContext).setCredentials(
-                applicationContext, applicationKey, clientKey, true);
+                applicationContext, applicationKey, clientKey, false);
         R1Emitter.getInstance().connect(applicationContext);
         R1Push.getInstance(applicationContext).setIntentReceiver(CordovaPushReceiver.class);
         R1Push.getInstance(this.cordova.getActivity()).setOnOpenListener(this);
@@ -218,7 +218,7 @@ public class R1ConnectPlugin extends CordovaPlugin implements
                                     applicationContext, applicationKey);
                         } else {
                             R1GeofenceSDKManager.getInstance()
-                                    .disableGeofencingInSdk();
+                                    .disableGeofencing();
                         }
 
                         callbackContext.success();
