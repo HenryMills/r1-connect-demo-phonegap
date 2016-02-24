@@ -682,6 +682,17 @@ Notify when a Raw notification is recieved when the application is running in th
 		alert(event);
     }, false);
     
+    
+## Debugging Tool
+
+This tool allows you to verify that the events that you have set up are triggering correctly. You can access the debugging area of the portal to view the JSON events sent by your application.
+
+Setup
+
+To enable the debugging tool, you should create a flat file titled "r1DebugDevices" with a list of IDFAs in "www" folder of your project. There should be one ID per line.
+
+Once you build the app and install it on the same test devices that you added in the r1DebugDevices file, you should see any action taken in the app appear in the debug section of the portal.
+    
 ## Example
 
 An example can be found in Demo. To run it, copy the files:
