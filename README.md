@@ -689,7 +689,7 @@ This tool allows you to verify that the events that you have set up are triggeri
 
 Setup
 
-To enable the debugging tool, you should create a flat file titled "r1DebugDevices" with a list of IDFAs in "www" folder of your project. There should be one ID per line.
+To enable the debugging tool, you should create a flat file titled "r1DebugDevices" with a list of IDFA/AAID in "www" folder of your project. There should be one ID per line.
 
 Once you build the app and install it on the same test devices that you added in the r1DebugDevices file, you should see any action taken in the app appear in the debug section of the portal.
     
