@@ -12,6 +12,8 @@
 #define APP_ID_SETTINGS_KEY @"com.radiumone.r1connect.applicationid"
 #define CLIENT_KEY_SETTINGS_KEY @"com.radiumone.r1connect.clientkey"
 #define DISABLE_ALL_ADV_IDS_SETTINGS_KEY @"com.radiumone.r1connect.disablealladvertisingids"
+#define COOKIE_MAPPING_SETTINGS_KEY      @"com.radiumone.r1connect.cookiemapping"
+#define DEFERRED_DEEPLINK_SCHEME_SETTINGS_KEY      @"com.radiumone.r1connect.deferreddeeplinkscheme"
 
 @implementation R1ConnectPlugin
 
@@ -33,6 +35,13 @@
     NSString *disableAllAdvertisingIds = [[settings valueForKey:DISABLE_ALL_ADV_IDS_SETTINGS_KEY] lowercaseString];
     sdk.disableAllAdvertisingIds = [disableAllAdvertisingIds isEqualToString:@"true"] || [disableAllAdvertisingIds isEqualToString:@"YES"];
     
+    NSString *cookieMapping = [[settings valueForKey:COOKIE_MAPPING_SETTINGS_KEY] lowercaseString];
+    sdk.cookieMapping = [cookieMapping isEqualToString:@"true"] || [cookieMapping isEqualToString:@"YES"];
+
+    NSString *deferredDeeplinkScheme = [settings valueForKey:DEFERRED_DEEPLINK_SCHEME_SETTINGS_KEY];
+    if (deferredDeeplinkScheme != nil)
+        sdk.deferredDeeplinkScheme = deferredDeeplinkScheme;
+
     sdk.push.delegate = (id)self;
 
     [sdk start];

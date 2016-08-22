@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.radiumone.R1Connect.phonegap"
-    version="3.2.0">
+    version="3.4.0">
 
     <name>R1Connect Plugin</name>
     
@@ -14,7 +14,11 @@
     	<engine name="cordova" version=">=3.0.0" />
     </engines>
 
+
     <dependency id="cordova-plugin-device" url="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" commit="master" subdir="." />
+
+    <framework src="com.google.android.gms:play-services-gcm:+" />
+    <framework src="com.google.android.gms:play-services-location:+" />
 
     <js-module src="www/R1Connect.js" name="R1Connect">
          <clobbers target="R1Connect" />
@@ -98,7 +102,6 @@
         <source-file src="src/android/R1ConnectPlugin.java" target-dir="src/com/radiumone/cordova/plugin" />
         <source-file src="src/android/CordovaPushReceiver.java" target-dir="src/com/radiumone/cordova/plugin" />
         <source-file src="src/android/LibR1Connect.jar" target-dir="libs/" />
-        <source-file src="src/android/android-support-v4-library.jar" target-dir="libs/" />
         <source-file src="src/android/r1connect.properties" target-dir="assets/" />
 
     </platform>
@@ -157,7 +160,7 @@
         <framework src="CoreLocation.framework" />
         <framework src="SystemConfiguration.framework" />
         <framework src="Security.framework" />
-        <framework src="CoreBluetooth.framework" />        
+        <framework src="CoreBluetooth.framework" />
     </platform>
 
     <!-- wp8 -->

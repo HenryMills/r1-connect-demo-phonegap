@@ -44,7 +44,9 @@ public class R1ConnectPlugin extends CordovaPlugin implements
     static final String APPLICATION_KEY = "com.radiumone.r1connect.applicationid";
     static final String CLIENT_KEY = "com.radiumone.r1connect.clientkey";
     static final String GCM_SENDER_ID = "com.radiumone.r1connect.senderid";
-    static final String DISABLE_ALL_ADV_IDS_SETTINGS_KEY = "com.radiumone.r1connect.disablealladvertisingids";
+    static final String DISABLE_ALL_ADV_IDS_SETTINGS_KEY = "com.radiumone.r1connect.disableAllAdvertisingids";
+    static final String COOKIE_MAPPING = "com.radiumone.r1connect.cookieMapping";
+    static final String DEFERRED_DEEP_LINK_SCHEME = "com.radiumone.r1connect.deferredDeeplinkScheme";
 
     private static final String WRONG_PARAMETERS_COUNT = "Wrong parameters count";
     private static final String WRONG_PARAMETERS = "One of parameter is wrong";
@@ -72,6 +74,20 @@ public class R1ConnectPlugin extends CordovaPlugin implements
 
         String disableAllAdvertisingIds = params
                 .get(DISABLE_ALL_ADV_IDS_SETTINGS_KEY);
+
+        String cookieMapping = params
+                .get(COOKIE_MAPPING);
+
+        if (cookieMapping != null && (!TextUtils.isEmpty(cookieMapping) && "true".equals(cookieMapping))){
+            R1PushPreferences.getInstance(applicationContext).cookieMappingEnable();
+        } else {
+            R1PushPreferences.getInstance(applicationContext).cookieMappingDisable();
+        }
+
+        String defferedDeepLinkScheme = params.get(DEFERRED_DEEP_LINK_SCHEME);
+        if (!TextUtils.isEmpty(defferedDeepLinkScheme)){
+            R1Emitter.getInstance().setEnableDefferedDeepLinkScheme(defferedDeepLinkScheme);
+        }
 
         if (!TextUtils.isEmpty(disableAllAdvertisingIds)) {
             R1Emitter.getInstance().disableAllAdvertisingIds(
@@ -174,8 +190,8 @@ public class R1ConnectPlugin extends CordovaPlugin implements
                     return true;
 
                 } else if ("location_getCoordinate".equals(action)) {
-                    LocationHelper.getLocationHelper(applicationContext)
-                            .getLastLocation();
+                    LocationHelper.getInstance(applicationContext)
+                            .getLastKnownLocation();
                     callbackContext.success();
                     return true;
                 } else if ("location_getAutoupdateTimeout".equals(action)) {
@@ -218,7 +234,7 @@ public class R1ConnectPlugin extends CordovaPlugin implements
                                     applicationContext, applicationKey);
                         } else {
                             R1GeofenceSDKManager.getInstance()
-                                    .disableGeofencing();
+                                    .disableGeofencingInSdk();
                         }
 
                         callbackContext.success();
@@ -1268,10 +1284,9 @@ public class R1ConnectPlugin extends CordovaPlugin implements
                     }
 
                     private void evalJs(final String js) {
-
-                        if (webView != null) {
-                            webView.getView().post(new Runnable(){
-                                public void run(){
+                        if (webView.getView() != null) {
+                            webView.getView().post(new Runnable() {
+                                public void run() {
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                                         webView.sendJavascript(js);
                                     } else {
@@ -1281,7 +1296,6 @@ public class R1ConnectPlugin extends CordovaPlugin implements
                             });
                         }
                     }
-
                 });
             }
         }
