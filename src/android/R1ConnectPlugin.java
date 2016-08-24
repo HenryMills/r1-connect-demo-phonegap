@@ -44,9 +44,9 @@ public class R1ConnectPlugin extends CordovaPlugin implements
     static final String APPLICATION_KEY = "com.radiumone.r1connect.applicationid";
     static final String CLIENT_KEY = "com.radiumone.r1connect.clientkey";
     static final String GCM_SENDER_ID = "com.radiumone.r1connect.senderid";
-    static final String DISABLE_ALL_ADV_IDS_SETTINGS_KEY = "com.radiumone.r1connect.disableAllAdvertisingids";
-    static final String COOKIE_MAPPING = "com.radiumone.r1connect.cookieMapping";
-    static final String DEFERRED_DEEP_LINK_SCHEME = "com.radiumone.r1connect.deferredDeeplinkScheme";
+    static final String DISABLE_ALL_ADV_IDS_SETTINGS_KEY = "com.radiumone.r1connect.disablealladvertisingids";
+    static final String COOKIE_MAPPING = "com.radiumone.r1connect.cookiemapping";
+    static final String DEFERRED_DEEP_LINK_SCHEME = "com.radiumone.r1connect.deferreddeeplinkscheme";
 
     private static final String WRONG_PARAMETERS_COUNT = "Wrong parameters count";
     private static final String WRONG_PARAMETERS = "One of parameter is wrong";
