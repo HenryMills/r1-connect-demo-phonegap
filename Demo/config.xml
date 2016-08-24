@@ -22,4 +22,7 @@
     <preference name="com.radiumone.r1connect.TileAllowedDomains" value="[TILE DOMAIN 1], [TILE DOMAIN 2]" />
 
     <preference name="com.radiumone.r1connect.disableAllAdvertisingIds" value="false" />
+
+    <preference name="com.radiumone.r1connect.cookieMapping" value="true" />
+    <preference name="com.radiumone.r1connect.deferredDeeplinkScheme" value="[YOUR APP SCHEME]" />
 </widget>

@@ -71,6 +71,21 @@ static char launchNotificationKey;
                                    applicationState:application.applicationState];
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [self application:application
+                     openURL:url
+                     options:sourceApplication ? @{@"UIApplicationOpenURLOptionsSourceApplicationKey":sourceApplication} : @{}];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+{
+    R1SDK *sdk = [R1SDK sharedInstance];
+    [sdk openURL:url];
+
+    return YES;
+}
+
 - (NSMutableArray *)launchNotification
 {
     return objc_getAssociatedObject(self, &launchNotificationKey);

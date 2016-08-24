@@ -16,6 +16,8 @@
 
 @property(nonatomic, assign) BOOL cookieMapping;
 
+@property(nonatomic, copy) NSString *deferredDeeplinkScheme;
+
 /*!
  The current user location.
  Use this variable only if your application already used location services.
@@ -32,6 +34,8 @@
 - (void) startPush;
 
 - (void) start; // Start emitter and push
+
+- (BOOL) openURL:(NSURL *)url;
 
 + (NSString *) sha1:(NSString *) inputString;
 + (NSString *) md5:(NSString *) inputString;

@@ -1,23 +1,5 @@
 package com.radiumone.cordova.plugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.PluginResult;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +18,24 @@ import com.radiumone.emitter.push.R1PushConfig;
 import com.radiumone.emitter.push.R1PushPreferences;
 import com.radiumone.geofence_sdk.R1GeofenceSDKManager;
 
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 public class R1ConnectPlugin extends CordovaPlugin implements
         R1Push.OnOpenListener {
 
@@ -44,7 +44,9 @@ public class R1ConnectPlugin extends CordovaPlugin implements
     static final String APPLICATION_KEY = "com.radiumone.r1connect.applicationid";
     static final String CLIENT_KEY = "com.radiumone.r1connect.clientkey";
     static final String GCM_SENDER_ID = "com.radiumone.r1connect.senderid";
-    static final String DISABLE_ALL_ADV_IDS_SETTINGS_KEY = "com.radiumone.r1connect.disablealladvertisingids";
+    static final String DISABLE_ALL_ADV_IDS_SETTINGS_KEY = "com.radiumone.r1connect.disableallavertisingids";
+    static final String COOKIE_MAPPING = "com.radiumone.r1connect.cookiemapping";
+    static final String DEFERRED_DEEP_LINK_SCHEME = "com.radiumone.r1connect.deferreddeeplinkscheme";
 
     private static final String WRONG_PARAMETERS_COUNT = "Wrong parameters count";
     private static final String WRONG_PARAMETERS = "One of parameter is wrong";
@@ -73,6 +75,20 @@ public class R1ConnectPlugin extends CordovaPlugin implements
         String disableAllAdvertisingIds = params
                 .get(DISABLE_ALL_ADV_IDS_SETTINGS_KEY);
 
+        String cookieMapping = params
+                .get(COOKIE_MAPPING);
+
+        if (cookieMapping != null && (!TextUtils.isEmpty(cookieMapping) && "true".equals(cookieMapping))){
+            R1PushPreferences.getInstance(applicationContext).cookieMappingEnable();
+        } else {
+            R1PushPreferences.getInstance(applicationContext).cookieMappingDisable();
+        }
+
+        String defferedDeepLinkScheme = params.get(DEFERRED_DEEP_LINK_SCHEME);
+        if (!TextUtils.isEmpty(defferedDeepLinkScheme)){
+            R1Emitter.getInstance().setEnableDefferedDeepLinkScheme(defferedDeepLinkScheme);
+        }
+
         if (!TextUtils.isEmpty(disableAllAdvertisingIds)) {
             R1Emitter.getInstance().disableAllAdvertisingIds(
                     "true".equalsIgnoreCase(disableAllAdvertisingIds));
@@ -80,10 +96,10 @@ public class R1ConnectPlugin extends CordovaPlugin implements
 
         if (!TextUtils.isEmpty(senderId)) {
             R1PushConfig.getInstance(applicationContext).setSenderId(senderId,
-                    false);
+                    true);
         }
         R1PushConfig.getInstance(applicationContext).setCredentials(
-                applicationContext, applicationKey, clientKey, false);
+                applicationContext, applicationKey, clientKey, true);
         R1Emitter.getInstance().connect(applicationContext);
         R1Push.getInstance(applicationContext).setIntentReceiver(CordovaPushReceiver.class);
         R1Push.getInstance(this.cordova.getActivity()).setOnOpenListener(this);
@@ -174,8 +190,8 @@ public class R1ConnectPlugin extends CordovaPlugin implements
                     return true;
 
                 } else if ("location_getCoordinate".equals(action)) {
-                    LocationHelper.getLocationHelper(applicationContext)
-                            .getLastLocation();
+                    LocationHelper.getInstance(applicationContext)
+                            .getLastKnownLocation();
                     callbackContext.success();
                     return true;
                 } else if ("location_getAutoupdateTimeout".equals(action)) {
@@ -218,7 +234,7 @@ public class R1ConnectPlugin extends CordovaPlugin implements
                                     applicationContext, applicationKey);
                         } else {
                             R1GeofenceSDKManager.getInstance()
-                                    .disableGeofencing();
+                                    .disableGeofencingInSdk();
                         }
 
                         callbackContext.success();

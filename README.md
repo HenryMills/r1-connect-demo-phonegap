@@ -12,7 +12,7 @@ This plugin is meant to work with PhoneGap 3.x - 4.x. For PhoneGap 5.x+ use bran
 
 #### Overview
 
-This integration doc assumes you have already set up Google Play Services in your application project for android (min version 7.5), which is needed to use Google Cloud Messaging (GCM), the notification gateway R1 Connect utilizes. Also you will need to have created the app you will be using in R1 Connect.
+This integration doc assumes you have already set up Google Play Services in your application project for android, which is needed to use Google Cloud Messaging (GCM), the notification gateway R1 Connect utilizes. Also you will need to have created the app you will be using in R1 Connect.
 
 In order to use R1 Connect with your application you will need a project number (sender ID) and API key from Google. Please visit “GCM Getting Started” [here](http://developer.android.com/intl/ru/google/gcm/gs.html) and create a google project and an API key.
 
@@ -55,6 +55,13 @@ If you want to disable sending all advertising ids to the server add this line
 
     <preference name="com.radiumone.r1connect.disableAllAdvertisingIds" value="true" />
 		
+Enable or disable cookie mapping. By default is disabled. Setting this first party cookie will enable RadiumOne to be effective in targeting the user for advertising campaigns run on behalf of the Publisher. Only enable this setting if you plan to run advertising with RadiumOne.
+
+    <preference name="com.radiumone.r1connect.cookieMapping" value="true" />
+
+Enable deferred deeplinking. Value is the app registered URL scheme.
+
+	<preference name="com.radiumone.r1connect.deferredDeeplinkScheme" value="[YOUR APP SCHEME]" />
 
 #### iOS manual installation (unnecessary if installed automatically)
 1. Copy all files from src/ios with subfolders to your project
@@ -444,18 +451,16 @@ Get last setted session timeout or default value
 		//...
     });
 
-#### Emitter EventsThe R1 Connect SDK will automatically capture some generic events, but in order to get the most meaningful data on how users interact with your app the SDK also offers pre-built user-defined events for popular user actions as well as the ability to create your own custom events.
+#### Emitter Events
 
 ##### State Events
 
-Some events are emitted automatically when the state of the application is changed by the OS and, therefore, they do not require any additional code to be written in the app in order to work out of the box:**Launch** - emitted when the app starts
-**First Launch** - emitted when the app starts for the first time**First Launch After Update** - emitted when the app starts for the first time after a version upgrade**Suspend** - emitted when the app is put into the background state**Resume** - emitted when the app returns from the background state
 
 ##### Pre-Defined Events
 
 Pre-Defined Events are also helpful in measuring certain metrics within the apps and do not require further developer input to function. These particular events below are used to help measure app open events and track Sessions.
-**Application Opened** - This event is very useful for push notifications and can measure when your app is opened after a message is sent.
-**Session Start** - As the name implies the Session Start event is used to start a new session.
+**Application Opened** - This event is very useful for push notifications and can measure when your app is opened after a message is sent.
+**Session Start** - As the name implies the Session Start event is used to start a new session.
 
 **Session End** - The Session End event is used to end a session and passes with it a Session Length attribute that calculates the session length in seconds.
 
@@ -484,7 +489,11 @@ Tracks a user login within the app
 
 **Registration**
 
-Records a user registration within the app	R1Emitter.emitRegistration("userId", "userName", "country", "state", "city", {"custom_key":"value"});**Facebook connect**
+Records a user registration within the app
+
+	R1Emitter.emitRegistration("userId", "userName", "country", "state", "city", {"custom_key":"value"});
+
+**Facebook connect**
 
 Allows access to Facebook services
 
@@ -492,7 +501,8 @@ Allows access to Facebook services
 
 **Twitter connect**
 
-Allows access to Twitter services
+Allows access to Twitter services
+
 	R1Emitter.emitTConnect("12345", "user_name", [{name:"photos", granted:true}], {"custom_key":"value"});
 
 **Upgrade**
@@ -503,7 +513,9 @@ Tracks an application version upgrade
 
 **Trial Upgrade**
 
-Tracks an application upgrade from a trial version to a full version	R1Emitter.emitTrialUpgrade({"custom_key":"value"});
+Tracks an application upgrade from a trial version to a full version
+
+	R1Emitter.emitTrialUpgrade({"custom_key":"value"});
 
 **Screen View**
 
@@ -545,7 +557,9 @@ Basically, a page view, it provides info about that screen
 	R1Emitter.emitDeleteFromCart("cart_id", lineItem, {"custom_key":"value"});
 
 #####Custom Events
-With custom events you have the ability to create and track specific events that are more closely aligned with your app. If planned and structured correctly, custom events can be strong indicators of user intent and behavior. Some examples include pressing the “like” button, playing a song, changing the screen mode from portrait to landscape, and zooming in or out of an image. These are all actions by the user that could be tracked with events.To include tracking of custom events for the mobile app, the following callbacks need to be included in the application code:
+With custom events you have the ability to create and track specific events that are more closely aligned with your app. If planned and structured correctly, custom events can be strong indicators of user intent and behavior. Some examples include pressing the “like” button, playing a song, changing the screen mode from portrait to landscape, and zooming in or out of an image. These are all actions by the user that could be tracked with events.
+
+To include tracking of custom events for the mobile app, the following callbacks need to be included in the application code:
 
 	// Emits a custom event without parameters
 	R1Emitter.emitEvent("Your custom event name");
