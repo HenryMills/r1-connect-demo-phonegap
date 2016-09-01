@@ -234,7 +234,7 @@ public class R1ConnectPlugin extends CordovaPlugin implements
                                     applicationContext, applicationKey);
                         } else {
                             R1GeofenceSDKManager.getInstance()
-                                    .disableGeofencingInSdk();
+                                    .disableGeofencing();
                         }
 
                         callbackContext.success();
